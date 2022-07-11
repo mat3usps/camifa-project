@@ -40,13 +40,13 @@
     "tiny-invariant": "^1.2.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "^6.3.1",
+    "@faker-js/faker": "^7.3.0",
     "@remix-run/dev": "^1.6.4",
     "@remix-run/eslint-config": "^1.6.4",
     "@testing-library/cypress": "^8.0.3",
     "@testing-library/dom": "^8.13.0",
     "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^12.1.5",
+    "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^14.2.0",
     "@types/bcryptjs": "^2.4.2",
     "@types/eslint": "^8.4.3",
@@ -61,11 +61,11 @@
     "cypress": "^10.0.3",
     "eslint": "^8.17.0",
     "eslint-config-prettier": "^8.5.0",
-    "happy-dom": "^5.2.0",
-    "msw": "^0.42.1",
+    "happy-dom": "^6.0.2",
+    "msw": "^0.43.1",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.14",
-    "prettier": "2.6.2",
+    "prettier": "2.7.1",
     "prettier-plugin-tailwindcss": "^0.1.11",
     "prisma": "^4.0.0",
     "start-server-and-test": "^1.14.0",
@@ -75,7 +75,7 @@
     "typescript": "^4.7.3",
     "vite": "^2.9.10",
     "vite-tsconfig-paths": "^3.5.0",
-    "vitest": "^0.14.1"
+    "vitest": "^0.18.0"
   },
   "engines": {
     "node": ">=14"
