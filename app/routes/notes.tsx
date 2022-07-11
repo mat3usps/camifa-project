@@ -1,10 +1,10 @@
 import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
+import { useUser } from "~/hooks/useUser";
 
-import { requireUserId } from "~/session.server";
-import { useUser } from "~/utils";
 import { getNoteListItems } from "~/models/note.server";
+import { requireUserId } from "~/session.server";
 
 type LoaderData = {
   noteListItems: Awaited<ReturnType<typeof getNoteListItems>>;
@@ -55,6 +55,7 @@ export default function NotesPage() {
                     className={({ isActive }) =>
                       `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
                     }
+                    prefetch="intent"
                     to={note.id}
                   >
                     📝 {note.title}
