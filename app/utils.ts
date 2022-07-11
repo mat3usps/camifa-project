@@ -1,4 +1,4 @@
-const DEFAULT_REDIRECT = "/";
+import APP_ROUTES from "./appRoutes";
 
 /**
  * This should be used any time the redirect path is user-provided
@@ -9,7 +9,7 @@ const DEFAULT_REDIRECT = "/";
  */
 export function safeRedirect(
   to: FormDataEntryValue | string | null | undefined,
-  defaultRedirect: string = DEFAULT_REDIRECT
+  defaultRedirect: string = APP_ROUTES.home
 ) {
   if (!to || typeof to !== "string") {
     return defaultRedirect;
