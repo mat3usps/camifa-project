@@ -1,6 +1,6 @@
 import { json, redirect } from "@remix-run/node";
-import APP_ROUTES from "~/appRoutes";
-import { getUserId } from "~/session.server";
+import { getUserId } from "~/server/session.server";
+import APP_ROUTES from "~/utils/appRoutes";
 
 export const redirectToAppIfLoggedIn = async (request: Request) => {
   const userId = await getUserId(request);

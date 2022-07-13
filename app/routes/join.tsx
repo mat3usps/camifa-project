@@ -7,12 +7,12 @@ import { json } from "@remix-run/node";
 import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
 import * as React from "react";
 
-import { createUserSession } from "~/session.server";
+import { createUserSession } from "~/server/session.server";
 
-import APP_ROUTES from "~/appRoutes";
 import { redirectToAppIfLoggedIn } from "~/middleware/redirects";
 import { createUser, getUserByEmail } from "~/models/user.server";
-import { safeRedirect, validateEmail } from "~/utils";
+import APP_ROUTES from "~/utils/appRoutes";
+import { safeRedirect, validateEmail } from "~/utils/utils";
 
 export const loader: LoaderFunction = async ({ request }) => {
   return redirectToAppIfLoggedIn(request);

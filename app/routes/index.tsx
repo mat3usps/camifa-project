@@ -2,8 +2,8 @@ import { Link } from "@remix-run/react";
 import { useOptionalUser } from "~/hooks/useOptionalUser";
 
 import { LoaderFunction } from "@remix-run/node";
-import APP_ROUTES from "~/appRoutes";
 import { redirectToAppIfLoggedIn } from "~/middleware/redirects";
+import APP_ROUTES from "~/utils/appRoutes";
 
 export const loader: LoaderFunction = async ({ request }) => {
   return redirectToAppIfLoggedIn(request);
