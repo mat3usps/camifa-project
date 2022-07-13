@@ -1,6 +1,16 @@
 import { Link } from "@remix-run/react";
 import { useOptionalUser } from "~/hooks/useOptionalUser";
 
+import { json, LoaderFunction, redirect } from "@remix-run/node";
+import APP_ROUTES from "~/appRoutes";
+import { getUserId } from "~/session.server";
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const userId = await getUserId(request);
+  if (userId) return redirect(APP_ROUTES.app);
+  return json({});
+};
+
 export default function Index() {
   const user = useOptionalUser();
   return (

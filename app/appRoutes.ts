@@ -1,4 +1,5 @@
 enum APP_ROUTES {
+  app = "/app",
   home = "/",
 }
 
