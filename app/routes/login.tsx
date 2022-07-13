@@ -8,8 +8,8 @@ import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
 import * as React from "react";
 import APP_ROUTES from "~/utils/appRoutes";
 
-import { verifyLogin } from "~/models/user.server";
 import { createUserSession } from "~/server/session.server";
+import { verifyLogin } from "~/server/user.server";
 import { safeRedirect, validateEmail } from "~/utils/utils";
 
 import { redirectToAppIfLoggedIn } from "~/middleware/redirects";

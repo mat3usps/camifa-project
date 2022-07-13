@@ -1,4 +1,4 @@
-import { User } from "~/models/user.server";
+import User from "~/models/User";
 import { useOptionalUser } from "./useOptionalUser";
 
 export function useUser(): User {

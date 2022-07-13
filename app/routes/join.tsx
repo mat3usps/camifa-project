@@ -10,7 +10,7 @@ import * as React from "react";
 import { createUserSession } from "~/server/session.server";
 
 import { redirectToAppIfLoggedIn } from "~/middleware/redirects";
-import { createUser, getUserByEmail } from "~/models/user.server";
+import { createUser, getUserByEmail } from "~/server/user.server";
 import APP_ROUTES from "~/utils/appRoutes";
 import { safeRedirect, validateEmail } from "~/utils/utils";
 
