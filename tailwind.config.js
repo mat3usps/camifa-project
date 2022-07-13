@@ -4,5 +4,20 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography"), require("daisyui")],
+  daisyui: {
+    themes: [
+      "winter",
+      "night",
+      "business",
+      "corporate",
+      "valentine",
+      "halloween",
+      "aqua",
+      "lofi",
+      "black",
+      "luxury",
+      "night",
+    ],
+  },
 };

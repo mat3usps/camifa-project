@@ -3,19 +3,19 @@ import type {
   LoaderFunction,
   MetaFunction,
 } from "@remix-run/node";
-import { json, redirect } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
 import * as React from "react";
-import APP_ROUTES from "~/appRoutes";
+import APP_ROUTES from "~/utils/appRoutes";
 
 import { verifyLogin } from "~/models/user.server";
-import { createUserSession, getUserId } from "~/session.server";
-import { safeRedirect, validateEmail } from "~/utils";
+import { createUserSession } from "~/server/session.server";
+import { safeRedirect, validateEmail } from "~/utils/utils";
+
+import { redirectToAppIfLoggedIn } from "~/middleware/redirects";
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const userId = await getUserId(request);
-  if (userId) return redirect(APP_ROUTES.home);
-  return json({});
+  return redirectToAppIfLoggedIn(request);
 };
 
 interface ActionData {
@@ -176,7 +176,7 @@ export default function LoginPage() {
               <Link
                 className="text-blue-500 underline"
                 to={{
-                  pathname: "/join",
+                  pathname: APP_ROUTES.join,
                   search: searchParams.toString(),
                 }}
               >

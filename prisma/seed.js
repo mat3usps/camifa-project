@@ -13,7 +13,7 @@ async function seed() {
 
   const hashedPassword = await bcrypt.hash("test@888", 10);
 
-  await prisma.user.create({
+  const user = await prisma.user.create({
     data: {
       email,
       password: {
@@ -21,6 +21,44 @@ async function seed() {
           hash: hashedPassword,
         },
       },
+    },
+  });
+
+  const account = await prisma.account.create({
+    data: {
+      currencyCode: "BRL",
+      name: "Test Account",
+      userId: user.id,
+    },
+  });
+
+  await prisma.account.create({
+    data: {
+      currencyCode: "USD",
+      isActive: false,
+      name: "Inactive Account",
+      userId: user.id,
+    },
+  });
+
+  const bankAccount = await prisma.bankAccount.create({
+    data: {
+      accountId: account.id,
+      bankName: "C6 Bank",
+      color: "#000",
+      description: "Lorem ipsum dolor",
+      initialBalance: 105000,
+      name: "Test Bank Account",
+    },
+  });
+
+  const inactiveBankAccount = await prisma.bankAccount.create({
+    data: {
+      accountId: account.id,
+      initialBalance: 0,
+      isActive: false,
+      name: "Inactive Bank Account",
+      type: "savings",
     },
   });
 
