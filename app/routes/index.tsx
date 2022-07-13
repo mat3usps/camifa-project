@@ -1,14 +1,12 @@
 import { Link } from "@remix-run/react";
 import { useOptionalUser } from "~/hooks/useOptionalUser";
 
-import { json, LoaderFunction, redirect } from "@remix-run/node";
+import { LoaderFunction } from "@remix-run/node";
 import APP_ROUTES from "~/appRoutes";
-import { getUserId } from "~/session.server";
+import { redirectToAppIfLoggedIn } from "~/middleware/redirects";
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const userId = await getUserId(request);
-  if (userId) return redirect(APP_ROUTES.app);
-  return json({});
+  return redirectToAppIfLoggedIn(request);
 };
 
 export default function Index() {
@@ -31,13 +29,13 @@ export default function Index() {
                 ) : (
                   <div className="space-y-4 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5 sm:space-y-0">
                     <Link
-                      to="/join"
+                      to={APP_ROUTES.join}
                       className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-yellow-700 shadow-sm hover:bg-yellow-50 sm:px-8"
                     >
                       Sign up
                     </Link>
                     <Link
-                      to="/login"
+                      to={APP_ROUTES.login}
                       className="flex items-center justify-center rounded-md bg-yellow-500 px-4 py-3 font-medium text-white hover:bg-yellow-600  "
                     >
                       Log In
