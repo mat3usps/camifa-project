@@ -1,9 +1,8 @@
-import { Link } from "@remix-run/react";
-import { ComponentProps } from "react";
+import { LinkTo } from "~/types/LinkTo";
 
 export type Menu = {
   label: string;
-  to?: ComponentProps<typeof Link>["to"];
+  to?: LinkTo;
   subMenus?: Menu[];
 };
 
