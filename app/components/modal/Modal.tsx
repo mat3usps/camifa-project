@@ -23,14 +23,14 @@ const Modal: FC<IModalProps> = ({
   return (
     <div
       aria-labelledby={title ? "modal-title" : undefined}
-      className="modal modal-open modal-bottom sm:modal-middle"
+      className="not-prose modal modal-open modal-bottom sm:modal-middle"
       role="dialog"
     >
       <div className="modal-box relative">
         {onCloseLinkTo && (
           <Link
             aria-label="Fechar"
-            className="btn btn-ghost btn-circle btn-sm absolute right-2 top-2"
+            className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2"
             to={onCloseLinkTo}
           >
             ✕

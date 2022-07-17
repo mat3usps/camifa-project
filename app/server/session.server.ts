@@ -1,7 +1,8 @@
 import { createCookieSessionStorage, redirect } from "@remix-run/node";
 import invariant from "tiny-invariant";
+import { AccountId } from "~/models/Account";
 
-import User from "~/models/User";
+import { UserId } from "~/models/User";
 import { getUserById } from "~/server/user.server";
 import APP_ROUTES from "../utils/appRoutes";
 
@@ -19,15 +20,14 @@ export const sessionStorage = createCookieSessionStorage({
 });
 
 const USER_SESSION_KEY = "userId";
+const ACCOUNT_SESSION_KEY = "accountId";
 
-export async function getSession(request: Request) {
+async function getSession(request: Request) {
   const cookie = request.headers.get("Cookie");
   return sessionStorage.getSession(cookie);
 }
 
-export async function getUserId(
-  request: Request
-): Promise<User["id"] | undefined> {
+export async function getUserId(request: Request): Promise<UserId | undefined> {
   const session = await getSession(request);
   const userId = session.get(USER_SESSION_KEY);
   return userId;
@@ -35,12 +35,24 @@ export async function getUserId(
 
 export async function getUser(request: Request) {
   const userId = await getUserId(request);
-  if (userId === undefined) return null;
+  if (!userId) {
+    return null;
+  }
 
   const user = await getUserById(userId);
-  if (user) return user;
+  if (user) {
+    return user;
+  }
 
   throw await logout(request);
+}
+
+export async function getAccountId(
+  request: Request
+): Promise<AccountId | undefined> {
+  const session = await getSession(request);
+  const accountId = session.get(ACCOUNT_SESSION_KEY);
+  return accountId;
 }
 
 export async function requireUserId(
@@ -59,7 +71,9 @@ export async function requireUser(request: Request) {
   const userId = await requireUserId(request);
 
   const user = await getUserById(userId);
-  if (user) return user;
+  if (user) {
+    return user;
+  }
 
   throw await logout(request);
 }
@@ -84,6 +98,21 @@ export async function createUserSession({
           ? 60 * 60 * 24 * 7 // 7 days
           : undefined,
       }),
+    },
+  });
+}
+export async function setAccountSession({
+  request,
+  accountId,
+}: {
+  request: Request;
+  accountId: string;
+}) {
+  const session = await getSession(request);
+  session.set(ACCOUNT_SESSION_KEY, accountId);
+  return redirect(APP_ROUTES.accounts, {
+    headers: {
+      "Set-Cookie": await sessionStorage.commitSession(session),
     },
   });
 }

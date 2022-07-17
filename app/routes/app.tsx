@@ -11,7 +11,12 @@ export default function AppPage() {
   return (
     <>
       <Navbar />
-      <div className="prose relative min-h-[calc(100%-_4rem)] p-6">
+      <div
+        className="prose relative max-w-none p-6"
+        style={{
+          minHeight: "calc(100% - 4rem)",
+        }}
+      >
         <Outlet />
       </div>
     </>

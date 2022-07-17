@@ -12,6 +12,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import AccountServer from "./server/account.server";
 
 import { getUser } from "./server/session.server";
 import tailwindStylesheetUrl from "./styles/tailwind.css";
@@ -27,13 +28,15 @@ export const meta: MetaFunction = () => ({
 });
 
 type LoaderData = {
+  account: Awaited<ReturnType<typeof AccountServer.getSelectedAccount>>;
   user: Awaited<ReturnType<typeof getUser>>;
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-  return json<LoaderData>({
-    user: await getUser(request),
-  });
+  const account = await AccountServer.getSelectedAccount(request);
+  const user = await getUser(request);
+
+  return json<LoaderData>({ account, user });
 };
 
 export default function App() {
