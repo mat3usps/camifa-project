@@ -1,6 +1,7 @@
-import { Form } from "@remix-run/react";
+import { Form, Link } from "@remix-run/react";
 import { VFC } from "react";
 import { useUser } from "~/hooks/useUser";
+import APP_ROUTES from "~/utils/appRoutes";
 import UserThumbnail from "../userThumbnail/UserThumbnail";
 import AppMenu from "./AppMenu";
 
@@ -47,11 +48,14 @@ const Navbar: VFC = () => {
     return (
       <ul
         tabIndex={0}
-        className="dropdown-content menu rounded-box menu-compact mt-3 bg-base-100 p-2 shadow"
+        className="dropdown-content menu rounded-box menu-compact mt-3 whitespace-nowrap bg-base-100 p-2 shadow"
       >
+        <li>
+          <Link to={APP_ROUTES.accounts}>Suas contas</Link>
+        </li>
         <Form action="/logout" method="post">
           <li>
-            <button type="submit">Logout</button>
+            <button type="submit">Sair</button>
           </li>
         </Form>
       </ul>
