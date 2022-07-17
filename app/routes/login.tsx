@@ -34,21 +34,21 @@ export const action: ActionFunction = async ({ request }) => {
 
   if (!validateEmail(email)) {
     return json<ActionData>(
-      { errors: { email: "Email is invalid" } },
+      { errors: { email: "E-mail inválido" } },
       { status: 400 }
     );
   }
 
   if (typeof password !== "string" || password.length === 0) {
     return json<ActionData>(
-      { errors: { password: "Password is required" } },
+      { errors: { password: "Por favor digite sua senha" } },
       { status: 400 }
     );
   }
 
   if (password.length < 8) {
     return json<ActionData>(
-      { errors: { password: "Password is too short" } },
+      { errors: { password: "A senha digitada é muito curta" } },
       { status: 400 }
     );
   }
@@ -57,7 +57,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   if (!user) {
     return json<ActionData>(
-      { errors: { email: "Invalid email or password" } },
+      { errors: { email: "Seu e-mail ou senha são inválidos" } },
       { status: 400 }
     );
   }
@@ -65,14 +65,14 @@ export const action: ActionFunction = async ({ request }) => {
   return createUserSession({
     request,
     userId: user.id,
-    remember: remember === "on" ? true : false,
+    remember: remember === "on",
     redirectTo,
   });
 };
 
 export const meta: MetaFunction = () => {
   return {
-    title: "Login",
+    title: "Entre na sua conta",
   };
 };
 
@@ -100,7 +100,7 @@ export default function LoginPage() {
               htmlFor="email"
               className="block text-sm font-medium text-gray-700"
             >
-              Email address
+              Seu e-mail
             </label>
             <div className="mt-1">
               <input
@@ -128,7 +128,7 @@ export default function LoginPage() {
               htmlFor="password"
               className="block text-sm font-medium text-gray-700"
             >
-              Password
+              Sua senha
             </label>
             <div className="mt-1">
               <input
@@ -154,7 +154,7 @@ export default function LoginPage() {
             type="submit"
             className="w-full rounded bg-blue-500  py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400"
           >
-            Log in
+            Entrar
           </button>
           <div className="flex items-center justify-between">
             <div className="flex items-center">
@@ -168,11 +168,11 @@ export default function LoginPage() {
                 htmlFor="remember"
                 className="ml-2 block text-sm text-gray-900"
               >
-                Remember me
+                Lembrar
               </label>
             </div>
             <div className="text-center text-sm text-gray-500">
-              Don't have an account?{" "}
+              Não possui uma conta?{" "}
               <Link
                 className="text-blue-500 underline"
                 to={{
@@ -180,7 +180,7 @@ export default function LoginPage() {
                   search: searchParams.toString(),
                 }}
               >
-                Sign up
+                Registre-se
               </Link>
             </div>
           </div>

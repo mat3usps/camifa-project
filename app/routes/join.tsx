@@ -14,6 +14,8 @@ import { createUser, getUserByEmail } from "~/server/user.server";
 import APP_ROUTES from "~/utils/appRoutes";
 import { safeRedirect, validateEmail } from "~/utils/utils";
 
+const PAGE_TITLE = "Registre sua conta";
+
 export const loader: LoaderFunction = async ({ request }) => {
   return redirectToAppIfLoggedIn(request);
 };
@@ -33,21 +35,21 @@ export const action: ActionFunction = async ({ request }) => {
 
   if (!validateEmail(email)) {
     return json<ActionData>(
-      { errors: { email: "Email is invalid" } },
+      { errors: { email: "E-mail inválido" } },
       { status: 400 }
     );
   }
 
   if (typeof password !== "string" || password.length === 0) {
     return json<ActionData>(
-      { errors: { password: "Password is required" } },
+      { errors: { password: "Por favor digite sua senha" } },
       { status: 400 }
     );
   }
 
   if (password.length < 8) {
     return json<ActionData>(
-      { errors: { password: "Password is too short" } },
+      { errors: { password: "A senha digitada é muito curta" } },
       { status: 400 }
     );
   }
@@ -55,7 +57,7 @@ export const action: ActionFunction = async ({ request }) => {
   const existingUser = await getUserByEmail(email);
   if (existingUser) {
     return json<ActionData>(
-      { errors: { email: "A user already exists with this email" } },
+      { errors: { email: "Já existe um usuário registrado com este e-mail" } },
       { status: 400 }
     );
   }
@@ -72,7 +74,7 @@ export const action: ActionFunction = async ({ request }) => {
 
 export const meta: MetaFunction = () => {
   return {
-    title: "Sign Up",
+    title: PAGE_TITLE,
   };
 };
 
@@ -100,7 +102,7 @@ export default function Join() {
               htmlFor="email"
               className="block text-sm font-medium text-gray-700"
             >
-              Email address
+              Seu e-mail
             </label>
             <div className="mt-1">
               <input
@@ -128,7 +130,7 @@ export default function Join() {
               htmlFor="password"
               className="block text-sm font-medium text-gray-700"
             >
-              Password
+              Sua senha
             </label>
             <div className="mt-1">
               <input
@@ -154,11 +156,11 @@ export default function Join() {
             type="submit"
             className="w-full rounded bg-blue-500  py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400"
           >
-            Create Account
+            {PAGE_TITLE}
           </button>
           <div className="flex items-center justify-center">
             <div className="text-center text-sm text-gray-500">
-              Already have an account?{" "}
+              Já possui uma conta?{" "}
               <Link
                 className="text-blue-500 underline"
                 to={{
@@ -166,7 +168,7 @@ export default function Join() {
                   search: searchParams.toString(),
                 }}
               >
-                Log in
+                Entre aqui
               </Link>
             </div>
           </div>
