@@ -6,7 +6,6 @@ import Button from "~/components/button/Button";
 import LinkButton from "~/components/button/LinkButton";
 import Input from "~/components/form/Input";
 import Modal from "~/components/modal/Modal";
-import { CurrencyCode } from "~/models/CurrencyCode";
 import AccountServer from "~/server/account.server";
 import { getUserId } from "~/server/session.server";
 import APP_ROUTES from "~/utils/appRoutes";
@@ -33,7 +32,7 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   AccountServer.create({
-    currencyCode: CurrencyCode.BRL,
+    currencyCode: "BRL",
     name,
     userId,
   });
