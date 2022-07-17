@@ -1,8 +1,14 @@
-import { ActionFunction, json } from "@remix-run/node";
+import { ActionFunction, json, redirect } from "@remix-run/node";
 
-import { Form, Link, useActionData } from "@remix-run/react";
+import { Form, useActionData } from "@remix-run/react";
 import { useRef } from "react";
+import Button from "~/components/button/Button";
+import LinkButton from "~/components/button/LinkButton";
+import Input from "~/components/form/Input";
 import Modal from "~/components/modal/Modal";
+import { CurrencyCode } from "~/models/CurrencyCode";
+import AccountServer from "~/server/account.server";
+import { getUserId } from "~/server/session.server";
 import APP_ROUTES from "~/utils/appRoutes";
 
 interface ActionData {
@@ -12,13 +18,27 @@ interface ActionData {
 }
 
 export const action: ActionFunction = async ({ request }) => {
+  const userId = await getUserId(request);
+
+  if (!userId) return redirect(APP_ROUTES.login);
+
   const formData = await request.formData();
   const name = formData.get("name");
 
-  return json<ActionData>(
-    { errors: { name: "Invalid name" } },
-    { status: 400 }
-  );
+  if (!name || typeof name !== "string") {
+    return json<ActionData>(
+      { errors: { name: "Nome é inválido" } },
+      { status: 400 }
+    );
+  }
+
+  AccountServer.create({
+    currencyCode: CurrencyCode.BRL,
+    name,
+    userId,
+  });
+
+  return redirect(APP_ROUTES.accounts);
 };
 
 export default function AddAccountPage() {
@@ -31,12 +51,10 @@ export default function AddAccountPage() {
       <Modal
         buttons={
           <>
-            <Link className="btn btn-ghost" to={APP_ROUTES.accounts}>
+            <LinkButton to={APP_ROUTES.accounts} variant="ghost">
               Cancelar
-            </Link>
-            <button className="btn btn-primary" type="submit">
-              Salvar
-            </button>
+            </LinkButton>
+            <Button type="submit">Salvar</Button>
           </>
         }
         isOpen={true}
@@ -44,32 +62,14 @@ export default function AddAccountPage() {
         title="Nova conta"
       >
         <div className="space-y-6">
-          <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Nome
-            </label>
-            <div className="mt-1">
-              <input
-                ref={nameRef}
-                id="name"
-                required
-                autoFocus={true}
-                name="name"
-                type="text"
-                aria-invalid={actionData?.errors?.name ? true : undefined}
-                aria-describedby="name-error"
-                className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
-              />
-              {actionData?.errors?.name && (
-                <div className="pt-1 text-red-700" id="name-error">
-                  {actionData.errors.name}
-                </div>
-              )}
-            </div>
-          </div>
+          <Input
+            autoFocus={true}
+            id="name"
+            isRequired
+            errorMessage={actionData?.errors?.name}
+            label="Nome"
+            ref={nameRef}
+          />
         </div>
       </Modal>
     </Form>
