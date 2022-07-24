@@ -43,7 +43,14 @@ class AccountServer {
     return AccountServer.update({ id, isDeleted: true });
   };
 
-  static getSelectedAccount = async (request: Request) => {
+  static getSelectedAccount = async (
+    request: Request,
+    userId: UserId | undefined
+  ) => {
+    if (!userId) {
+      return null;
+    }
+
     const accountId = await getAccountId(request);
     if (accountId) {
       const account = await AccountServer.getById(accountId);
@@ -52,7 +59,7 @@ class AccountServer {
       }
     }
 
-    const accounts = await AccountServer.getAllActive();
+    const accounts = await AccountServer.getAllActive(userId);
     if (accounts.length === 1) {
       return accounts[0];
     }

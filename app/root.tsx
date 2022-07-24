@@ -33,8 +33,8 @@ type LoaderData = {
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const account = await AccountServer.getSelectedAccount(request);
   const user = await getUser(request);
+  const account = await AccountServer.getSelectedAccount(request, user?.id);
 
   return json<LoaderData>({ account, user });
 };
