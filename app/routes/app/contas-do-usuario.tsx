@@ -84,6 +84,7 @@ export default function AccountPage() {
   }) {
     return (
       <Card
+        aria-label={`Selecionar conta ${name}`}
         className={classNames({
           "line-through": isDisabled,
           "bg-primary-content text-primary-focus": isSelected,
