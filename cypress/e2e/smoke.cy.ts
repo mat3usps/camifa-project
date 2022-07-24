@@ -1,7 +1,7 @@
-import { faker } from "@faker-js/faker";
+import { createTestEmail, createTestPassword } from "support/testUtils";
 
-const USER_EMAIL = `${faker.internet.userName()}@example.com`.toLowerCase();
-const USER_PASSWORD = faker.internet.password();
+const USER_EMAIL = createTestEmail();
+const USER_PASSWORD = createTestPassword();
 
 const REGISTER_ACCOUNT = /registre sua conta/i;
 
