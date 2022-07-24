@@ -1,4 +1,4 @@
-import { safeRedirect, validateEmail } from "./utils";
+import { isProductionEnvironment, safeRedirect, validateEmail } from "./utils";
 
 describe("safeRedirect()", () => {
   it.each([undefined, null])(
@@ -29,4 +29,20 @@ describe("validateEmail()", () => {
   it("should returns true for emails", () => {
     expect(validateEmail("kody@example.com")).toBe(true);
   });
+});
+
+describe("isProductionEnvironment", () => {
+  it("should return true if production in NODE_ENV", () => {
+    process.env.NODE_ENV = "production";
+    expect(isProductionEnvironment()).toBe(true);
+  });
+
+  it.each(["development", "test"])(
+    "should return false if %s in NODE_ENV",
+    (expected) => {
+      // @ts-ignore
+      process.env.NODE_ENV = expected;
+      expect(isProductionEnvironment()).toBe(false);
+    }
+  );
 });

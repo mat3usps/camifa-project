@@ -4,6 +4,7 @@ import { AccountId } from "~/models/Account";
 
 import { UserId } from "~/models/User";
 import { getUserById } from "~/server/user.server";
+import { isProductionEnvironment } from "~/utils/utils";
 import APP_ROUTES from "../utils/appRoutes";
 
 invariant(process.env.SESSION_SECRET, "SESSION_SECRET must be set");
@@ -15,7 +16,7 @@ export const sessionStorage = createCookieSessionStorage({
     path: APP_ROUTES.home,
     sameSite: "lax",
     secrets: [process.env.SESSION_SECRET],
-    secure: process.env.NODE_ENV === "production",
+    secure: isProductionEnvironment(),
   },
 });
 
