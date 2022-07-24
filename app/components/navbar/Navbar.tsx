@@ -36,7 +36,10 @@ const Navbar: VFC = () => {
         <AppMenu type="horizontal" />
       </div>
       <div className="navbar-end">
-        <div className="dropdown-end dropdown">
+        <div
+          aria-label="Menu do perfil do usuário"
+          className="dropdown dropdown-end"
+        >
           <UserThumbnail email={user.email} />
           {renderUserThumbnailMenu()}
         </div>
