@@ -65,7 +65,7 @@ describe("<Card />", () => {
     expect(getByRole("button", { name: "Button 2" })).toBeInTheDocument();
   });
 
-  it.only("should render card with onClick", async () => {
+  it("should render card with onClick", async () => {
     const onClick = vitest.fn();
     getRenderer({ onClick });
     expect(onClick).not.toHaveBeenCalled();
