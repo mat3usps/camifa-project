@@ -1,4 +1,4 @@
-import { ActionFunction, json, redirect } from "@remix-run/node";
+import { ActionFunction, json } from "@remix-run/node";
 
 import { Form, useActionData } from "@remix-run/react";
 import { useRef } from "react";
@@ -6,8 +6,9 @@ import Button from "~/components/button/Button";
 import LinkButton from "~/components/button/LinkButton";
 import Input from "~/components/form/Input";
 import Modal from "~/components/modal/Modal";
+import { getUserIdOrRedirect } from "~/middleware/getUserIdOrRedirect";
 import AccountServer from "~/server/account.server";
-import { getUserId, setAccountSession } from "~/server/session.server";
+import { setAccountSession } from "~/server/session.server";
 import APP_ROUTES from "~/utils/appRoutes";
 
 interface ActionData {
@@ -17,9 +18,7 @@ interface ActionData {
 }
 
 export const action: ActionFunction = async ({ request }) => {
-  const userId = await getUserId(request);
-
-  if (!userId) return redirect(APP_ROUTES.login);
+  const userId = await getUserIdOrRedirect(request);
 
   const formData = await request.formData();
   const name = formData.get("name");
