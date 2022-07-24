@@ -1,5 +1,5 @@
 import { Form, Link } from "@remix-run/react";
-import { VFC } from "react";
+import type { VFC } from "react";
 import { useUser } from "~/hooks/useUser";
 import APP_ROUTES from "~/utils/appRoutes";
 import UserThumbnail from "../userThumbnail/UserThumbnail";
@@ -30,7 +30,9 @@ const Navbar: VFC = () => {
           </label>
           <AppMenu type="vertical" />
         </div>
-        <a className="btn btn-ghost text-xl normal-case">Camifa</a>
+        <Link className="btn btn-ghost text-xl normal-case" to={APP_ROUTES.app}>
+          Camifa
+        </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <AppMenu type="horizontal" />

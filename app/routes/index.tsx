@@ -1,7 +1,7 @@
 import { Link } from "@remix-run/react";
 import { useOptionalUser } from "~/hooks/useOptionalUser";
 
-import { LoaderFunction } from "@remix-run/node";
+import type { LoaderFunction } from "@remix-run/node";
 import { redirectToAppIfLoggedIn } from "~/middleware/redirects";
 import APP_ROUTES from "~/utils/appRoutes";
 

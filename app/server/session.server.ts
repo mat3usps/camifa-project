@@ -1,8 +1,8 @@
 import { createCookieSessionStorage, redirect } from "@remix-run/node";
 import invariant from "tiny-invariant";
-import { AccountId } from "~/models/Account";
+import type { AccountId } from "~/models/Account";
 
-import { UserId } from "~/models/User";
+import type { UserId } from "~/models/User";
 import { getUserById } from "~/server/user.server";
 import { isProductionEnvironment } from "~/utils/utils";
 import APP_ROUTES from "../utils/appRoutes";

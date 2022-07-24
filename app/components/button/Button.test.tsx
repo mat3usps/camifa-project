@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { ComponentProps } from "react";
+import type { ComponentProps } from "react";
 import { MemoryRouter } from "react-router-dom";
 import Button from "./Button";
 

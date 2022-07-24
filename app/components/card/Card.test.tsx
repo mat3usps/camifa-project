@@ -1,6 +1,6 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { ComponentProps } from "react";
+import type { ComponentProps } from "react";
 import { MemoryRouter } from "react-router-dom";
 import Card from "./Card";
 
@@ -70,9 +70,9 @@ describe("<Card />", () => {
     getRenderer({ onClick });
     expect(onClick).not.toHaveBeenCalled();
 
-    await userEvent.click(getByTestId("Card"));
-    await userEvent.click(getByTestId("Card"));
-    expect(onClick).toHaveBeenCalledTimes(2);
+    userEvent.click(getByTestId("Card"));
+    userEvent.click(getByTestId("Card"));
+    await waitFor(() => expect(onClick).toHaveBeenCalledTimes(2));
   });
 });
 

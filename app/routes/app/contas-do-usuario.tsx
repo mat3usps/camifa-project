@@ -1,11 +1,13 @@
-import { ActionFunction, json, LoaderFunction } from "@remix-run/node";
+import type { ActionFunction, LoaderFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import { Outlet, useFetcher, useLoaderData } from "@remix-run/react";
 import classNames from "classnames";
 import LinkButton from "~/components/button/LinkButton";
 import Card from "~/components/card/Card";
 import { useOptionalAccount } from "~/hooks/useOptionalAccount";
 import { getUserIdOrRedirect } from "~/middleware/getUserIdOrRedirect";
-import Account, { AccountId } from "~/models/Account";
+import type { AccountId } from "~/models/Account";
+import type Account from "~/models/Account";
 import { getCurrencyName } from "~/models/CurrencyCode";
 import AccountServer from "~/server/account.server";
 import { setAccountSession } from "~/server/session.server";

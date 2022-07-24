@@ -1,6 +1,6 @@
-import { AccountId, AddAccount, EditAccount } from "~/models/Account";
+import type { AccountId, AddAccount, EditAccount } from "~/models/Account";
 
-import { UserId } from "~/models/User";
+import type { UserId } from "~/models/User";
 import { prisma } from "~/server/db.server";
 import { getAccountId } from "./session.server";
 

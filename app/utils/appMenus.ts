@@ -1,4 +1,4 @@
-import { LinkTo } from "~/types/LinkTo";
+import type { LinkTo } from "~/types/LinkTo";
 
 export type Menu = {
   label: string;
