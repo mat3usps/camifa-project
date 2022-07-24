@@ -9,14 +9,17 @@ class AccountServer {
     return prisma.account.findUnique({ where: { id } });
   };
 
-  static getAll = async () => {
-    return prisma.account.findMany({ orderBy: { name: "asc" } });
-  };
-
-  static getAllActive = async () => {
+  static getAll = async (userId: UserId) => {
     return prisma.account.findMany({
       orderBy: { name: "asc" },
-      where: { isActive: true },
+      where: { userId },
+    });
+  };
+
+  static getAllActive = async (userId: UserId) => {
+    return prisma.account.findMany({
+      orderBy: { name: "asc" },
+      where: { isActive: true, userId },
     });
   };
 
