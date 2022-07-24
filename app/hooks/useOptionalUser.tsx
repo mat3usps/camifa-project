@@ -1,4 +1,4 @@
-import User from "~/models/User";
+import type User from "~/models/User";
 import { useMatchesData } from "./useMatchesData";
 
 export function useOptionalUser(): User | undefined {

@@ -1,5 +1,5 @@
 import type { Account as AccountFromPrisma } from "@prisma/client";
-import { CurrencyCode } from "./CurrencyCode";
+import type { CurrencyCode } from "./CurrencyCode";
 
 type Account = Omit<AccountFromPrisma, "currencyCode"> & {
   currencyCode: CurrencyCode;

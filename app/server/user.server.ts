@@ -1,4 +1,4 @@
-import { UserEmail, UserId } from "~/models/User";
+import type { UserEmail, UserId } from "~/models/User";
 
 import bcrypt from "bcryptjs";
 

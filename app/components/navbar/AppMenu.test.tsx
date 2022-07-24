@@ -1,5 +1,7 @@
+/* eslint-disable jest/no-conditional-expect */
+
 import { render, screen } from "@testing-library/react";
-import { ComponentProps } from "react";
+import type { ComponentProps } from "react";
 import { MemoryRouter } from "react-router-dom";
 import APP_MENUS from "~/utils/appMenus";
 import AppMenu from "./AppMenu";
@@ -13,6 +15,7 @@ describe("<AppMenu />", () => {
     APP_MENUS.forEach(({ label, subMenus, to }) => {
       if (subMenus) {
         const menu = getByText(label);
+
         expect(menu).toBeInTheDocument();
         subMenus.forEach((subMenu) => {
           if (subMenu.to) {
@@ -20,11 +23,11 @@ describe("<AppMenu />", () => {
               getByRole("link", { name: subMenu.label })
             ).toBeInTheDocument();
           } else {
-            expect(queryByText(subMenu.label)).toBeNull();
+            expect(queryByText(subMenu.label)).not.toBeInTheDocument();
           }
         });
       } else if (!to) {
-        expect(queryByText(label)).toBeNull();
+        expect(queryByText(label)).not.toBeInTheDocument();
       } else {
         expect(getByRole("link", { name: label })).toBeInTheDocument();
       }

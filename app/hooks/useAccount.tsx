@@ -1,4 +1,4 @@
-import Account from "~/models/Account";
+import type Account from "~/models/Account";
 import { useOptionalAccount } from "./useOptionalAccount";
 
 export function useAccount(): Account {

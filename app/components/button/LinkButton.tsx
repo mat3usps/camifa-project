@@ -1,6 +1,8 @@
-import { Link, LinkProps } from "@remix-run/react";
-import { FC } from "react";
-import useButtonBase, { IUseButtonBase } from "./useButtonBase";
+import type { LinkProps } from "@remix-run/react";
+import { Link } from "@remix-run/react";
+import type { FC } from "react";
+import type { IUseButtonBase } from "./useButtonBase";
+import useButtonBase from "./useButtonBase";
 
 interface ILinkButtonProps
   extends IUseButtonBase,

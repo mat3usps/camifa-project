@@ -1,18 +1,16 @@
-import {
-  ActionFunction,
-  json,
-  LoaderFunction,
-  redirect,
-} from "@remix-run/node";
+import type { ActionFunction, LoaderFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import { Outlet, useFetcher, useLoaderData } from "@remix-run/react";
 import classNames from "classnames";
 import LinkButton from "~/components/button/LinkButton";
 import Card from "~/components/card/Card";
 import { useOptionalAccount } from "~/hooks/useOptionalAccount";
-import Account, { AccountId } from "~/models/Account";
+import { getUserIdOrRedirect } from "~/middleware/getUserIdOrRedirect";
+import type { AccountId } from "~/models/Account";
+import type Account from "~/models/Account";
 import { getCurrencyName } from "~/models/CurrencyCode";
 import AccountServer from "~/server/account.server";
-import { getUserId, setAccountSession } from "~/server/session.server";
+import { setAccountSession } from "~/server/session.server";
 import APP_ROUTES from "~/utils/appRoutes";
 
 type LoaderData = {
@@ -20,10 +18,6 @@ type LoaderData = {
 };
 
 export const action: ActionFunction = async ({ request }) => {
-  const userId = await getUserId(request);
-
-  if (!userId) return redirect(APP_ROUTES.login);
-
   const formData = await request.formData();
   const accountId = formData.get("accountId");
 
@@ -34,8 +28,9 @@ export const action: ActionFunction = async ({ request }) => {
   return json({});
 };
 
-export const loader: LoaderFunction = async () => {
-  const accounts = await AccountServer.getAll();
+export const loader: LoaderFunction = async ({ request }) => {
+  const userId = await getUserIdOrRedirect(request);
+  const accounts = await AccountServer.getAll(userId);
   return { accounts };
 };
 
@@ -91,6 +86,7 @@ export default function AccountPage() {
   }) {
     return (
       <Card
+        aria-label={`Selecionar conta ${name}`}
         className={classNames({
           "line-through": isDisabled,
           "bg-primary-content text-primary-focus": isSelected,

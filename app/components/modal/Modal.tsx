@@ -1,6 +1,6 @@
 import { Link } from "@remix-run/react";
-import { FC, ReactNode } from "react";
-import { LinkTo } from "~/types/LinkTo";
+import type { FC, ReactNode } from "react";
+import type { LinkTo } from "~/types/LinkTo";
 
 interface IModalProps {
   buttons?: ReactNode;

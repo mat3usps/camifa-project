@@ -1,6 +1,6 @@
-import { AccountId, AddAccount, EditAccount } from "~/models/Account";
+import type { AccountId, AddAccount, EditAccount } from "~/models/Account";
 
-import { UserId } from "~/models/User";
+import type { UserId } from "~/models/User";
 import { prisma } from "~/server/db.server";
 import { getAccountId } from "./session.server";
 
@@ -9,14 +9,17 @@ class AccountServer {
     return prisma.account.findUnique({ where: { id } });
   };
 
-  static getAll = async () => {
-    return prisma.account.findMany({ orderBy: { name: "asc" } });
-  };
-
-  static getAllActive = async () => {
+  static getAll = async (userId: UserId) => {
     return prisma.account.findMany({
       orderBy: { name: "asc" },
-      where: { isActive: true },
+      where: { userId },
+    });
+  };
+
+  static getAllActive = async (userId: UserId) => {
+    return prisma.account.findMany({
+      orderBy: { name: "asc" },
+      where: { isActive: true, userId },
     });
   };
 
@@ -40,7 +43,14 @@ class AccountServer {
     return AccountServer.update({ id, isDeleted: true });
   };
 
-  static getSelectedAccount = async (request: Request) => {
+  static getSelectedAccount = async (
+    request: Request,
+    userId: UserId | undefined
+  ) => {
+    if (!userId) {
+      return null;
+    }
+
     const accountId = await getAccountId(request);
     if (accountId) {
       const account = await AccountServer.getById(accountId);
@@ -49,7 +59,7 @@ class AccountServer {
       }
     }
 
-    const accounts = await AccountServer.getAllActive();
+    const accounts = await AccountServer.getAllActive(userId);
     if (accounts.length === 1) {
       return accounts[0];
     }
