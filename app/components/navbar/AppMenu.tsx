@@ -1,7 +1,8 @@
 import { Link } from "@remix-run/react";
 import classnames from "classnames";
-import { VFC } from "react";
-import APP_MENUS, { Menu } from "~/utils/appMenus";
+import type { VFC } from "react";
+import type { Menu } from "~/utils/appMenus";
+import APP_MENUS from "~/utils/appMenus";
 
 interface IAppMenuProps {
   type: "horizontal" | "vertical";
@@ -15,8 +16,8 @@ const AppMenu: VFC<IAppMenuProps> = ({ type }) => {
     <ul
       tabIndex={0}
       className={classnames("menu", {
-        ["menu-horizontal p-0"]: isHorizontal,
-        ["dropdown-content rounded-box menu-compact mt-3 w-52 bg-base-100 p-2 shadow"]:
+        "menu-horizontal p-0": isHorizontal,
+        "dropdown-content rounded-box menu-compact mt-3 w-52 bg-base-100 p-2 shadow":
           isVertical,
       })}
     >

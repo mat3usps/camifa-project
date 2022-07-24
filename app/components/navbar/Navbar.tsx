@@ -1,5 +1,5 @@
 import { Form, Link } from "@remix-run/react";
-import { VFC } from "react";
+import type { VFC } from "react";
 import { useUser } from "~/hooks/useUser";
 import APP_ROUTES from "~/utils/appRoutes";
 import UserThumbnail from "../userThumbnail/UserThumbnail";
@@ -30,13 +30,18 @@ const Navbar: VFC = () => {
           </label>
           <AppMenu type="vertical" />
         </div>
-        <a className="btn btn-ghost text-xl normal-case">Camifa</a>
+        <Link className="btn btn-ghost text-xl normal-case" to={APP_ROUTES.app}>
+          Camifa
+        </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <AppMenu type="horizontal" />
       </div>
       <div className="navbar-end">
-        <div className="dropdown-end dropdown">
+        <div
+          aria-label="Menu do perfil do usuário"
+          className="dropdown-end dropdown"
+        >
           <UserThumbnail email={user.email} />
           {renderUserThumbnailMenu()}
         </div>
@@ -48,18 +53,24 @@ const Navbar: VFC = () => {
     return (
       <ul
         tabIndex={0}
-        className="dropdown-content menu rounded-box menu-compact mt-3 whitespace-nowrap bg-base-100 p-2 shadow"
+        className="dropdown-content menu rounded-box menu-compact whitespace-nowrap bg-base-100 p-2 shadow"
       >
-        <li>
+        <li onClick={onClickMenu}>
           <Link to={APP_ROUTES.accounts}>Suas contas</Link>
         </li>
-        <Form action="/logout" method="post">
-          <li>
+        <li onClick={onClickMenu}>
+          <Form action="/logout" method="post">
             <button type="submit">Sair</button>
-          </li>
-        </Form>
+          </Form>
+        </li>
       </ul>
     );
+  }
+
+  function onClickMenu() {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
   }
 };
 

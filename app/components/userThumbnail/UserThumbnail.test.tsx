@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
-import { ComponentProps } from "react";
+import type { ComponentProps } from "react";
 import UserThumbnail from "./UserThumbnail";
 
-const { getByRole, getByText, queryByText } = screen;
+const { getByText } = screen;
 
 describe("<UserThumbnail />", () => {
   it("should match snapshot", () => {

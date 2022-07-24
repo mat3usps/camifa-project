@@ -1,5 +1,6 @@
-import { FC } from "react";
-import useButtonBase, { IUseButtonBase } from "./useButtonBase";
+import type { FC } from "react";
+import type { IUseButtonBase } from "./useButtonBase";
+import useButtonBase from "./useButtonBase";
 
 interface IButtonProps extends IUseButtonBase {
   isDisabled?: boolean;

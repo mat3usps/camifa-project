@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { ComponentProps } from "react";
+import type { ComponentProps } from "react";
 import { MemoryRouter } from "react-router-dom";
 import Modal from "./Modal";
 
@@ -13,7 +13,7 @@ describe("<Modal />", () => {
 
   it("should NOT render dialog", () => {
     getRenderer({ isOpen: false });
-    expect(queryByRole("dialog")).toBeNull();
+    expect(queryByRole("dialog")).not.toBeInTheDocument();
   });
 
   it.each(["A title", "Another title"])(
@@ -52,7 +52,7 @@ describe("<Modal />", () => {
 
   it("should NOT render close button", () => {
     getRenderer({ isOpen: true, onCloseLinkTo: undefined });
-    expect(queryByRole("link", { name: "Fechar" })).toBeNull();
+    expect(queryByRole("link", { name: "Fechar" })).not.toBeInTheDocument();
   });
 });
 

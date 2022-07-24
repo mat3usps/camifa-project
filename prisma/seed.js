@@ -41,7 +41,7 @@ async function seed() {
     },
   });
 
-  const bankAccount = await prisma.bankAccount.create({
+  await prisma.bankAccount.create({
     data: {
       accountId: account.id,
       bankName: "C6 Bank",
@@ -52,7 +52,7 @@ async function seed() {
     },
   });
 
-  const inactiveBankAccount = await prisma.bankAccount.create({
+  await prisma.bankAccount.create({
     data: {
       accountId: account.id,
       initialBalance: 0,

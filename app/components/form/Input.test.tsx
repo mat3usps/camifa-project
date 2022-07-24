@@ -1,11 +1,11 @@
 import { render, screen } from "@testing-library/react";
-import { ComponentProps } from "react";
+import type { ComponentProps } from "react";
 import { MemoryRouter } from "react-router-dom";
 import Input from "./Input";
 
 type InputProps = ComponentProps<typeof Input>;
 
-const { getByRole, getByLabelText, getByText } = screen;
+const { getByRole, getByLabelText } = screen;
 
 describe("<Input />", () => {
   it.each(["input-id", "another-id"])(
@@ -81,12 +81,12 @@ describe("<Input />", () => {
 
   it("should render an input with a required attribute", () => {
     getRenderer({ isRequired: true });
-    expect(getByRole("textbox")).toHaveAttribute("required", "");
+    expect(getByRole("textbox")).toBeRequired();
   });
 
   it("should render an input with a disabled attribute", () => {
     getRenderer({ isDisabled: true });
-    expect(getByRole("textbox")).toHaveAttribute("disabled", "");
+    expect(getByRole("textbox")).toBeDisabled();
   });
 
   it("should render a focused input", () => {
