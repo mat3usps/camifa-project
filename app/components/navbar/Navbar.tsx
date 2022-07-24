@@ -38,7 +38,7 @@ const Navbar: VFC = () => {
       <div className="navbar-end">
         <div
           aria-label="Menu do perfil do usuário"
-          className="dropdown dropdown-end"
+          className="dropdown-end dropdown"
         >
           <UserThumbnail email={user.email} />
           {renderUserThumbnailMenu()}
@@ -51,18 +51,24 @@ const Navbar: VFC = () => {
     return (
       <ul
         tabIndex={0}
-        className="dropdown-content menu rounded-box menu-compact mt-3 whitespace-nowrap bg-base-100 p-2 shadow"
+        className="dropdown-content menu rounded-box menu-compact whitespace-nowrap bg-base-100 p-2 shadow"
       >
-        <li>
+        <li onClick={onClickMenu}>
           <Link to={APP_ROUTES.accounts}>Suas contas</Link>
         </li>
-        <Form action="/logout" method="post">
-          <li>
+        <li onClick={onClickMenu}>
+          <Form action="/logout" method="post">
             <button type="submit">Sair</button>
-          </li>
-        </Form>
+          </Form>
+        </li>
       </ul>
     );
+  }
+
+  function onClickMenu() {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
   }
 };
 
