@@ -4,14 +4,14 @@ const bcrypt = require("bcryptjs");
 const prisma = new PrismaClient();
 
 async function seed() {
-  const email = "rachel@remix.run";
+  const email = "test@camifa.com";
 
   // cleanup the existing database
   await prisma.user.delete({ where: { email } }).catch(() => {
     // no worries if it doesn't exist yet
   });
 
-  const hashedPassword = await bcrypt.hash("racheliscool", 10);
+  const hashedPassword = await bcrypt.hash("test@888", 10);
 
   const user = await prisma.user.create({
     data: {
@@ -24,19 +24,41 @@ async function seed() {
     },
   });
 
-  await prisma.note.create({
+  const account = await prisma.account.create({
     data: {
-      title: "My first note",
-      body: "Hello, world!",
+      currencyCode: "BRL",
+      name: "Test Account",
       userId: user.id,
     },
   });
 
-  await prisma.note.create({
+  await prisma.account.create({
     data: {
-      title: "My second note",
-      body: "Hello, world!",
+      currencyCode: "USD",
+      isActive: false,
+      name: "Inactive Account",
       userId: user.id,
+    },
+  });
+
+  const bankAccount = await prisma.bankAccount.create({
+    data: {
+      accountId: account.id,
+      bankName: "C6 Bank",
+      color: "#000",
+      description: "Lorem ipsum dolor",
+      initialBalance: 105000,
+      name: "Test Bank Account",
+    },
+  });
+
+  const inactiveBankAccount = await prisma.bankAccount.create({
+    data: {
+      accountId: account.id,
+      initialBalance: 0,
+      isActive: false,
+      name: "Inactive Bank Account",
+      type: "savings",
     },
   });
 

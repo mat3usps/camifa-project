@@ -12,9 +12,10 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import AccountServer from "./server/account.server";
 
+import { getUser } from "./server/session.server";
 import tailwindStylesheetUrl from "./styles/tailwind.css";
-import { getUser } from "./session.server";
 
 export const links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: tailwindStylesheetUrl }];
@@ -22,23 +23,25 @@ export const links: LinksFunction = () => {
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "Remix Notes",
+  title: "Camifa",
   viewport: "width=device-width,initial-scale=1",
 });
 
 type LoaderData = {
+  account: Awaited<ReturnType<typeof AccountServer.getSelectedAccount>>;
   user: Awaited<ReturnType<typeof getUser>>;
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-  return json<LoaderData>({
-    user: await getUser(request),
-  });
+  const account = await AccountServer.getSelectedAccount(request);
+  const user = await getUser(request);
+
+  return json<LoaderData>({ account, user });
 };
 
 export default function App() {
   return (
-    <html lang="en" className="h-full">
+    <html lang="pt-BR" className="h-full">
       <head>
         <Meta />
         <Links />

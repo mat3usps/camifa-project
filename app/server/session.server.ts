@@ -1,8 +1,10 @@
 import { createCookieSessionStorage, redirect } from "@remix-run/node";
 import invariant from "tiny-invariant";
+import { AccountId } from "~/models/Account";
 
-import type { User } from "~/models/user.server";
-import { getUserById } from "~/models/user.server";
+import { UserId } from "~/models/User";
+import { getUserById } from "~/server/user.server";
+import APP_ROUTES from "../utils/appRoutes";
 
 invariant(process.env.SESSION_SECRET, "SESSION_SECRET must be set");
 
@@ -10,7 +12,7 @@ export const sessionStorage = createCookieSessionStorage({
   cookie: {
     name: "__session",
     httpOnly: true,
-    path: "/",
+    path: APP_ROUTES.home,
     sameSite: "lax",
     secrets: [process.env.SESSION_SECRET],
     secure: process.env.NODE_ENV === "production",
@@ -18,15 +20,14 @@ export const sessionStorage = createCookieSessionStorage({
 });
 
 const USER_SESSION_KEY = "userId";
+const ACCOUNT_SESSION_KEY = "accountId";
 
-export async function getSession(request: Request) {
+async function getSession(request: Request) {
   const cookie = request.headers.get("Cookie");
   return sessionStorage.getSession(cookie);
 }
 
-export async function getUserId(
-  request: Request
-): Promise<User["id"] | undefined> {
+export async function getUserId(request: Request): Promise<UserId | undefined> {
   const session = await getSession(request);
   const userId = session.get(USER_SESSION_KEY);
   return userId;
@@ -34,12 +35,24 @@ export async function getUserId(
 
 export async function getUser(request: Request) {
   const userId = await getUserId(request);
-  if (userId === undefined) return null;
+  if (!userId) {
+    return null;
+  }
 
   const user = await getUserById(userId);
-  if (user) return user;
+  if (user) {
+    return user;
+  }
 
   throw await logout(request);
+}
+
+export async function getAccountId(
+  request: Request
+): Promise<AccountId | undefined> {
+  const session = await getSession(request);
+  const accountId = session.get(ACCOUNT_SESSION_KEY);
+  return accountId;
 }
 
 export async function requireUserId(
@@ -49,7 +62,7 @@ export async function requireUserId(
   const userId = await getUserId(request);
   if (!userId) {
     const searchParams = new URLSearchParams([["redirectTo", redirectTo]]);
-    throw redirect(`/login?${searchParams}`);
+    throw redirect(`${APP_ROUTES.login}?${searchParams}`);
   }
   return userId;
 }
@@ -58,7 +71,9 @@ export async function requireUser(request: Request) {
   const userId = await requireUserId(request);
 
   const user = await getUserById(userId);
-  if (user) return user;
+  if (user) {
+    return user;
+  }
 
   throw await logout(request);
 }
@@ -86,10 +101,25 @@ export async function createUserSession({
     },
   });
 }
+export async function setAccountSession({
+  request,
+  accountId,
+}: {
+  request: Request;
+  accountId: string;
+}) {
+  const session = await getSession(request);
+  session.set(ACCOUNT_SESSION_KEY, accountId);
+  return redirect(APP_ROUTES.accounts, {
+    headers: {
+      "Set-Cookie": await sessionStorage.commitSession(session),
+    },
+  });
+}
 
 export async function logout(request: Request) {
   const session = await getSession(request);
-  return redirect("/", {
+  return redirect(APP_ROUTES.home, {
     headers: {
       "Set-Cookie": await sessionStorage.destroySession(session),
     },
