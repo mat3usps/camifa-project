@@ -3,6 +3,10 @@ import APP_ROUTES from "~/utils/appRoutes";
 const FIRST_ACCOUNT_SELECTED = /^conta 1 \(ativa no momento\)$/i;
 
 describe("User accounts tests", () => {
+  afterEach(() => {
+    cy.cleanupUser();
+  });
+
   beforeEach(() => {
     cy.login();
     cy.visit("/app");
