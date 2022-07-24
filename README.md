@@ -4,17 +4,11 @@ Your finance Buddy.
 
 ## Development
 
-- Initial setup:
-
-  ```sh
-  npm run setup
-  ```
-
-- Start dev server:
-
-  ```sh
-  npm run dev
-  ```
+1. Install project dependencies: `npm install`
+2. Duplicate the file `.env.example` as `.env`
+3. Run initial setup: `npm run setup`
+4. Start dev server: `npm run dev`
+5. Open it in your browser: `http://localhost:3000`
 
 This starts your app in development mode, rebuilding assets on file changes.
 
@@ -22,6 +16,10 @@ The database seed script creates a new user with some data you can use to get st
 
 - Email: `test@camifa.com`
 - Password: `test@888`
+
+## Running migration after database schema changes
+
+- Run the command `npm run migrate:dev`
 
 ### Connecting to your database
 
