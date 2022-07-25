@@ -111,7 +111,7 @@ export async function setAccountSession({
 }) {
   const session = await getSession(request);
   session.set(ACCOUNT_SESSION_KEY, accountId);
-  return redirect(APP_ROUTES.accounts, {
+  return redirect(APP_ROUTES.app, {
     headers: {
       "Set-Cookie": await sessionStorage.commitSession(session),
     },
