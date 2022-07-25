@@ -3,12 +3,10 @@ import { json } from "@remix-run/node";
 import { Outlet, useFetcher, useLoaderData } from "@remix-run/react";
 import classNames from "classnames";
 import LinkButton from "~/components/button/LinkButton";
-import Card from "~/components/card/Card";
+import ListAccounts from "~/feature/account/ListAccounts";
 import { useOptionalAccount } from "~/hooks/useOptionalAccount";
 import { getUserIdOrRedirect } from "~/middleware/getUserIdOrRedirect";
 import type { AccountId } from "~/models/Account";
-import type Account from "~/models/Account";
-import { getCurrencyName } from "~/models/CurrencyCode";
 import AccountServer from "~/server/account.server";
 import { setAccountSession } from "~/server/session.server";
 import APP_ROUTES from "~/utils/appRoutes";
@@ -52,56 +50,20 @@ export default function AccountPage() {
         </LinkButton>
       </div>
       <Outlet />
-      {activeAccounts.map((account) => {
-        const isSelected = account.id === selectedAccount?.id;
-        return renderAccount({ account, isSelected });
-      })}
 
-      {inactiveAccounts.length > 0 && (
-        <>
-          <div className="divider mt-12" />
-          <h2>Contas inativas</h2>
-          {inactiveAccounts.map((account) =>
-            renderAccount({ account, isDisabled: true })
-          )}
-        </>
-      )}
+      <ListAccounts
+        activeAccounts={activeAccounts}
+        inactiveAccounts={inactiveAccounts}
+        onSelect={onSelect}
+        selectedAccountId={selectedAccount?.id}
+      />
     </>
   );
 
   function onSelect(id: AccountId) {
-    return () => {
-      fetcher.submit({ accountId: id }, { method: "post" });
-    };
-  }
-
-  function renderAccount({
-    account: { currencyCode, id, name },
-    isDisabled,
-    isSelected,
-  }: {
-    account: Account;
-    isDisabled?: boolean;
-    isSelected?: boolean;
-  }) {
-    return (
-      <Card
-        aria-label={`Selecionar conta ${name}`}
-        className={classNames({
-          "line-through": isDisabled,
-          "bg-primary-content text-primary-focus": isSelected,
-        })}
-        key={id}
-        onClick={
-          isDisabled || activeAccounts.length < 2 ? undefined : onSelect(id)
-        }
-        title={isSelected ? `${name} (ativa no momento)` : name}
-      >
-        {id}
-        <small>
-          {getCurrencyName(currencyCode)} ({currencyCode})
-        </small>
-      </Card>
+    fetcher.submit(
+      { accountId: id, redirectTo: redirectTo || APP_ROUTES.accounts },
+      { method: "post" }
     );
   }
 }
