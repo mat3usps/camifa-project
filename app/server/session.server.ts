@@ -105,13 +105,15 @@ export async function createUserSession({
 export async function setAccountSession({
   request,
   accountId,
+  redirectTo,
 }: {
   request: Request;
   accountId: string;
+  redirectTo: string;
 }) {
   const session = await getSession(request);
   session.set(ACCOUNT_SESSION_KEY, accountId);
-  return redirect(APP_ROUTES.accounts, {
+  return redirect(redirectTo, {
     headers: {
       "Set-Cookie": await sessionStorage.commitSession(session),
     },
