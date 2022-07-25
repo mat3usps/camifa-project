@@ -54,7 +54,7 @@ class AccountServer {
     const accountId = await getAccountId(request);
     if (accountId) {
       const account = await AccountServer.getById(accountId);
-      if (account) {
+      if (account?.isActive) {
         return account;
       }
     }
