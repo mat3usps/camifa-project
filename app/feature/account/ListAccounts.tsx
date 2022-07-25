@@ -5,6 +5,7 @@ import Card from "~/components/card/Card";
 import Account, { AccountId } from "~/models/Account";
 import { getCurrencyName } from "~/models/CurrencyCode";
 import APP_ROUTES from "~/utils/appRoutes";
+import { plural } from "~/utils/stringUtils";
 
 interface IListAccountsProps {
   activeAccounts: Account[];
@@ -38,7 +39,13 @@ const ListAccounts: VFC<IListAccountsProps> = ({
       {inactiveAccounts.length > 0 && (
         <>
           <div className="divider mt-12" />
-          <h2>Contas inativas</h2>
+          <h2>
+            {plural({
+              countFrom: inactiveAccounts,
+              one: "Perfil inativo",
+              other: "Perfis inativos",
+            })}
+          </h2>
           {inactiveAccounts.map((account) =>
             renderAccount({ account, isDisabled: true })
           )}
@@ -71,7 +78,6 @@ const ListAccounts: VFC<IListAccountsProps> = ({
         }
         title={isSelected ? `${name} (ativa no momento)` : name}
       >
-        {id}
         <small>
           {getCurrencyName(currencyCode)} ({currencyCode})
         </small>
