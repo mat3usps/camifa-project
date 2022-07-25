@@ -1,11 +1,6 @@
 import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import {
-  Outlet,
-  useFetcher,
-  useLoaderData,
-  useSearchParams,
-} from "@remix-run/react";
+import { Outlet, useFetcher, useLoaderData } from "@remix-run/react";
 import AlertMessage from "~/components/alert/AlertMessage";
 import LinkButton from "~/components/button/LinkButton";
 import ListAccounts from "~/feature/account/ListAccounts";
@@ -15,7 +10,6 @@ import type { AccountId } from "~/models/Account";
 import AccountServer from "~/server/account.server";
 import { requireUserId, setAccountSession } from "~/server/session.server";
 import APP_ROUTES from "~/utils/appRoutes";
-import { safeRedirect } from "~/utils/utils";
 
 type LoaderData = {
   accounts: Account[];
@@ -24,13 +18,9 @@ type LoaderData = {
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const accountId = formData.get("accountId");
-  const redirectTo = safeRedirect(
-    formData.get("redirectTo"),
-    APP_ROUTES.accounts
-  );
 
   if (typeof accountId === "string") {
-    return setAccountSession({ accountId, request, redirectTo });
+    return setAccountSession({ accountId, request });
   }
 
   return json({});
@@ -45,8 +35,6 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function AccountPage() {
   const { accounts } = useLoaderData<LoaderData>();
   const fetcher = useFetcher();
-  const [searchParams] = useSearchParams();
-  const redirectTo = searchParams.get("redirectTo");
 
   const selectedAccount = useOptionalAccount();
 
@@ -55,11 +43,7 @@ export default function AccountPage() {
 
   return (
     <>
-      {redirectTo && (
-        <AlertMessage className="mb-8" type="warning">
-          Selecione uma conta para continuar.
-        </AlertMessage>
-      )}
+      {renderMessage()}
       <div className="flex justify-between	">
         <h1>Suas contas</h1>
 
@@ -79,9 +63,20 @@ export default function AccountPage() {
   );
 
   function onSelect(id: AccountId) {
-    fetcher.submit(
-      { accountId: id, redirectTo: redirectTo || APP_ROUTES.accounts },
-      { method: "post" }
-    );
+    fetcher.submit({ accountId: id }, { method: "post" });
+  }
+
+  function renderMessage() {
+    if (!accounts.length) {
+      return null;
+    }
+
+    if (!selectedAccount) {
+      return (
+        <AlertMessage className="mb-8" type="warning">
+          Selecione uma conta para continuar.
+        </AlertMessage>
+      );
+    }
   }
 }

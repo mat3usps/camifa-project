@@ -9,12 +9,11 @@ import APP_ROUTES from "~/utils/appRoutes";
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await requireUserId(request);
 
-  const redirectTo = new URL(request.url).pathname;
+  const pathname = new URL(request.url).pathname;
   const accountId = await getAccountId(request);
 
-  if (redirectTo !== APP_ROUTES.accounts && !accountId) {
-    const searchParams = new URLSearchParams([["redirectTo", redirectTo]]);
-    return redirect(`${APP_ROUTES.accounts}?${searchParams}`);
+  if (!pathname.includes(APP_ROUTES.accounts) && !accountId) {
+    return redirect(APP_ROUTES.accounts);
   }
 
   const accounts = await AccountServer.getAll(userId);

@@ -1,8 +1,10 @@
 import classNames from "classnames";
 import { VFC } from "react";
+import LinkButton from "~/components/button/LinkButton";
 import Card from "~/components/card/Card";
 import Account, { AccountId } from "~/models/Account";
 import { getCurrencyName } from "~/models/CurrencyCode";
+import APP_ROUTES from "~/utils/appRoutes";
 
 interface IListAccountsProps {
   activeAccounts: Account[];
@@ -19,11 +21,20 @@ const ListAccounts: VFC<IListAccountsProps> = ({
 }) => {
   return (
     <>
+      {activeAccounts.length < 1 && (
+        <>
+          <p className="font-bold">
+            Cadastre sua primeira conta para utilizar o app
+          </p>
+          <LinkButton to={APP_ROUTES.addAccount} size="lg">
+            Adicionar nova conta
+          </LinkButton>
+        </>
+      )}
       {activeAccounts.map((account) => {
         const isSelected = account.id === selectedAccountId;
         return renderAccount({ account, isSelected });
       })}
-
       {inactiveAccounts.length > 0 && (
         <>
           <div className="divider mt-12" />
