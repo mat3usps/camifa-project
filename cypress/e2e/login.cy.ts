@@ -1,4 +1,5 @@
 import { createTestEmail, createTestPassword } from "support/testUtils";
+import APP_ROUTES from "~/utils/appRoutes";
 
 const USER_EMAIL = createTestEmail();
 const USER_PASSWORD = createTestPassword();
@@ -15,13 +16,15 @@ describe("Login & registration tests", () => {
 
     cy.visit("/");
     cy.findByRole("link", { name: REGISTER_ACCOUNT }).click();
-    cy.url().should("include", "/registrar");
+    cy.url().should("include", APP_ROUTES.join);
 
     // Register new user
     getEmailTextbox().type(USER_EMAIL);
     getPasswordTextbox().type(USER_PASSWORD);
     cy.findByRole("button", { name: REGISTER_ACCOUNT }).click();
-    cy.url().should("include", "/app");
+    cy.url().should("include", APP_ROUTES.app);
+
+    cy.registerAccount();
 
     // Logout
     cy.findByLabelText(/menu do perfil do usuário/i).click();
@@ -31,11 +34,11 @@ describe("Login & registration tests", () => {
 
     // Login
     getLoginLink().click();
-    cy.url().should("include", "/entrar");
+    cy.url().should("include", APP_ROUTES.login);
     getEmailTextbox().type(USER_EMAIL);
     getPasswordTextbox().type(USER_PASSWORD);
     cy.findByRole("button", { name: /entrar/i }).click();
-    cy.url().should("include", "/app");
+    cy.url().should("include", APP_ROUTES.app);
   });
 });
 

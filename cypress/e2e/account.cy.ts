@@ -9,7 +9,8 @@ describe("User accounts tests", () => {
 
   beforeEach(() => {
     cy.login();
-    cy.visit("/app");
+    cy.registerAccount();
+    cy.visit(APP_ROUTES.app);
   });
 
   it("should allow to register new accounts and change the selected one", () => {
@@ -29,26 +30,35 @@ describe("User accounts tests", () => {
     clickOnAddAccountLink();
     getNameTextbox().type("Conta 1");
     clickOnSaveLink();
-    cy.url().should("include", APP_ROUTES.accounts);
+    cy.url().should("include", APP_ROUTES.app);
+
+    visitAccountsPage();
     headingShouldBeVisible(FIRST_ACCOUNT_SELECTED);
 
     // Add second account and select it
     clickOnAddAccountLink();
     getNameTextbox().type("Conta 2");
     clickOnSaveLink();
-    cy.url().should("include", APP_ROUTES.accounts);
+
+    visitAccountsPage();
     headingShouldBeVisible(/^conta 1$/i);
     headingShouldBeVisible(/^conta 2 \(ativa no momento\)$/i);
 
     // Select the first account
     cy.findByRole("button", { name: /selecionar conta conta 1/i }).click();
+
+    visitAccountsPage();
     headingShouldBeVisible(FIRST_ACCOUNT_SELECTED);
     headingShouldBeVisible(/^conta 2$/i);
   });
 });
 
+function visitAccountsPage() {
+  cy.visit(APP_ROUTES.accounts);
+}
+
 function clickOnAddAccountLink() {
-  cy.findByRole("link", { name: /adicionar nova conta/i }).click();
+  cy.findByRole("link", { name: /adicionar novo perfil/i }).click();
 }
 
 function getNameTextbox() {
