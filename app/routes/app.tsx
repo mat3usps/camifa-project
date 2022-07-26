@@ -3,16 +3,19 @@ import { Outlet } from "@remix-run/react";
 import Navbar from "~/components/navbar/Navbar";
 import { useOptionalAccount } from "~/hooks/useOptionalAccount";
 import AccountServer from "~/server/account.server";
-import { getAccountId, requireUserId } from "~/server/session.server";
+import { requireUserId } from "~/server/session.server";
 import APP_ROUTES from "~/utils/appRoutes";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await requireUserId(request);
 
   const pathname = new URL(request.url).pathname;
-  const accountId = await getAccountId(request);
+  const selectedAccount = await AccountServer.getSelectedAccount(
+    request,
+    userId
+  );
 
-  if (!pathname.includes(APP_ROUTES.accounts) && !accountId) {
+  if (!pathname.includes(APP_ROUTES.accounts) && !selectedAccount) {
     return redirect(APP_ROUTES.accounts);
   }
 
