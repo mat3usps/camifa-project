@@ -57,7 +57,7 @@ export default function AddAccountPage() {
         }
         isOpen={true}
         onCloseLinkTo={APP_ROUTES.accounts}
-        title="Nova conta"
+        title="Novo perfil"
       >
         <div className="space-y-6">
           <Input
@@ -65,7 +65,9 @@ export default function AddAccountPage() {
             id="name"
             isRequired
             errorMessage={actionData?.errors?.name}
-            label="Nome"
+            placeholder="Pessoal, Empresa XYZ, Conta de Investimento, etc"
+            helperMessage="Qual perfil financeiro que você quer gerenciar?"
+            label="Nome do perfil"
             ref={nameRef}
           />
         </div>

@@ -45,10 +45,10 @@ export default function AccountPage() {
     <>
       {renderMessage()}
       <div className="flex justify-between	">
-        <h1>Suas contas</h1>
+        <h1>Seus Perfis</h1>
 
         <LinkButton to={APP_ROUTES.addAccount} variant="primary" isOutlined>
-          Adicionar nova conta
+          Adicionar novo perfil
         </LinkButton>
       </div>
       <Outlet />
@@ -74,7 +74,7 @@ export default function AccountPage() {
     if (!selectedAccount) {
       return (
         <AlertMessage className="mb-8" type="warning">
-          Selecione uma conta para continuar.
+          Selecione um perfil para continuar.
         </AlertMessage>
       );
     }

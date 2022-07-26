@@ -1,5 +1,5 @@
 const APP = "/app";
-const ACCOUNTS = `${APP}/contas-do-usuario`;
+const ACCOUNTS = `${APP}/perfis-do-usuario`;
 
 const APP_ROUTES = {
   app: APP,
