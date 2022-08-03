@@ -40,7 +40,7 @@ const Navbar: VFC = () => {
       <div className="navbar-end">
         <div
           aria-label="Menu do perfil do usuário"
-          className="dropdown-end dropdown"
+          className="dropdown dropdown-end"
         >
           <UserThumbnail email={user.email} />
           {renderUserThumbnailMenu()}

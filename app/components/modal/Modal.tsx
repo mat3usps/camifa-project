@@ -30,7 +30,7 @@ const Modal: FC<IModalProps> = ({
         {onCloseLinkTo && (
           <Link
             aria-label="Fechar"
-            className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2"
+            className="btn btn-ghost btn-circle btn-sm absolute right-2 top-2"
             to={onCloseLinkTo}
           >
             ✕
