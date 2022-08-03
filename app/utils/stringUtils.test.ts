@@ -17,7 +17,7 @@ describe("plural()", () => {
     expect(plural({ countFrom: 1, one: "one", other: "other" })).toBe("one");
   });
 
-  it("should return one using countFrom as an Array", () => {
+  it("should return one using countFrom as an Array with just one item", () => {
     expect(
       plural({ countFrom: ["first Item"], one: "one", other: "other" })
     ).toBe("one");
@@ -31,7 +31,7 @@ describe("plural()", () => {
     expect(plural({ countFrom: 3, one: "one", other: "other" })).toBe("other");
   });
 
-  it("should return one using countFrom as an Array", () => {
+  it("should return other using countFrom as an Array with more than one item", () => {
     expect(
       plural({
         countFrom: ["first Item", "second item"],
