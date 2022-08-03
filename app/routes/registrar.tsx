@@ -1,8 +1,4 @@
-import type {
-  ActionFunction,
-  LoaderFunction,
-  MetaFunction,
-} from "@remix-run/node";
+import type { ActionArgs, LoaderArgs, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
 import * as React from "react";
@@ -16,48 +12,46 @@ import { safeRedirect, validateEmail } from "~/utils/utils";
 
 const PAGE_TITLE = "Registre sua conta";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export async function loader({ request }: LoaderArgs) {
   return redirectToAppIfLoggedIn(request);
-};
-
-interface ActionData {
-  errors: {
-    email?: string;
-    password?: string;
-  };
 }
 
-export const action: ActionFunction = async ({ request }) => {
+export async function action({ request }: ActionArgs) {
   const formData = await request.formData();
   const email = formData.get("email");
   const password = formData.get("password");
   const redirectTo = safeRedirect(formData.get("redirectTo"), APP_ROUTES.home);
 
   if (!validateEmail(email)) {
-    return json<ActionData>(
-      { errors: { email: "E-mail inválido" } },
+    return json(
+      { errors: { email: "E-mail inválido", password: null } },
       { status: 400 }
     );
   }
 
   if (typeof password !== "string" || password.length === 0) {
-    return json<ActionData>(
-      { errors: { password: "Por favor digite sua senha" } },
+    return json(
+      { errors: { email: null, password: "Por favor digite sua senha" } },
       { status: 400 }
     );
   }
 
   if (password.length < 8) {
-    return json<ActionData>(
-      { errors: { password: "A senha digitada é muito curta" } },
+    return json(
+      { errors: { email: null, password: "A senha digitada é muito curta" } },
       { status: 400 }
     );
   }
 
   const existingUser = await getUserByEmail(email);
   if (existingUser) {
-    return json<ActionData>(
-      { errors: { email: "Já existe um usuário registrado com este e-mail" } },
+    return json(
+      {
+        errors: {
+          email: "Já existe um usuário registrado com este e-mail",
+          password: null,
+        },
+      },
       { status: 400 }
     );
   }
@@ -70,7 +64,7 @@ export const action: ActionFunction = async ({ request }) => {
     remember: false,
     redirectTo,
   });
-};
+}
 
 export const meta: MetaFunction = () => {
   return {
@@ -81,7 +75,7 @@ export const meta: MetaFunction = () => {
 export default function Join() {
   const [searchParams] = useSearchParams();
   const redirectTo = searchParams.get("redirectTo") ?? undefined;
-  const actionData = useActionData() as ActionData;
+  const actionData = useActionData<typeof action>();
   const emailRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);
 

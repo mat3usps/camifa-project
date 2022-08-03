@@ -1,13 +1,13 @@
 import { Link } from "@remix-run/react";
 import { useOptionalUser } from "~/hooks/useOptionalUser";
 
-import type { LoaderFunction } from "@remix-run/node";
+import type { LoaderArgs } from "@remix-run/node";
 import { redirectToAppIfLoggedIn } from "~/middleware/redirects";
 import APP_ROUTES from "~/utils/appRoutes";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export async function loader({ request }: LoaderArgs) {
   return redirectToAppIfLoggedIn(request);
-};
+}
 
 export default function Index() {
   const user = useOptionalUser();
