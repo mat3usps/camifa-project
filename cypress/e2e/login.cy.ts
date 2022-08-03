@@ -22,7 +22,7 @@ describe("Login & registration tests", () => {
     getEmailTextbox().type(USER_EMAIL);
     getPasswordTextbox().type(USER_PASSWORD);
     cy.findByRole("button", { name: REGISTER_ACCOUNT }).click();
-    cy.url().should("include", APP_ROUTES.app);
+    cy.url().should("include", APP_ROUTES.accounts);
 
     cy.registerAccount();
 

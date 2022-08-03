@@ -28,7 +28,7 @@ const ListAccounts: VFC<IListAccountsProps> = ({
             Cadastre sua primeira conta para utilizar o app
           </p>
           <LinkButton to={APP_ROUTES.addAccount} size="lg">
-            Adicionar novo perfil
+            Adicionar primeiro perfil
           </LinkButton>
         </>
       )}

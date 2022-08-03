@@ -1,4 +1,3 @@
-import APP_ROUTES from "~/utils/appRoutes";
 import { createTestEmail } from "./testUtils";
 
 declare global {
@@ -73,7 +72,9 @@ function cleanupUser({ email }: { email?: string } = {}) {
 }
 
 function registerAccount() {
-  cy.visit(APP_ROUTES.addAccount);
+  cy.visit("/app/perfis-do-usuario");
+
+  cy.contains(/adicionar novo perfil/i).click();
 
   cy.get("#name").type("Account #1");
   cy.contains(/salvar/i).click();
