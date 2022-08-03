@@ -3,7 +3,7 @@ import type { ComponentProps } from "react";
 import { MemoryRouter } from "react-router-dom";
 import Button from "./Button";
 
-type ButtonProps = ComponentProps<typeof Button>;
+type ButtonProps = Partial<ComponentProps<typeof Button>>;
 
 const { getByRole, getByText } = screen;
 
@@ -64,10 +64,10 @@ describe("<Button />", () => {
 });
 
 // Helpers
-function getRenderer(props: ButtonProps) {
+function getRenderer({ children = "Button label", ...rest }: ButtonProps) {
   return render(
     <MemoryRouter>
-      <Button {...props} />
+      <Button {...rest}>{children}</Button>
     </MemoryRouter>
   );
 }

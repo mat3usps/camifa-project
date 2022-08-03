@@ -1,16 +1,17 @@
 import classNames from "classnames";
-import type { FC, ReactNode } from "react";
+import type { ReactNode } from "react";
 
 interface ICardProps {
   "aria-label"?: string;
   buttons?: ReactNode;
+  children: ReactNode;
   className?: string;
   "data-testid"?: string;
   onClick?: () => void;
   title?: string;
 }
 
-const Card: FC<ICardProps> = ({
+const Card = ({
   "aria-label": ariaLabel,
   buttons,
   children,
@@ -18,7 +19,7 @@ const Card: FC<ICardProps> = ({
   "data-testid": testId = "Card",
   onClick,
   title,
-}) => {
+}: ICardProps) => {
   return (
     <div
       aria-label={ariaLabel}
