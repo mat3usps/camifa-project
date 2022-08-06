@@ -1,9 +1,8 @@
 import classNames from "classnames";
-import type { VFC } from "react";
 import LinkButton from "~/components/button/LinkButton";
 import Card from "~/components/card/Card";
-import type { AccountId } from "~/models/Account";
 import type Account from "~/models/Account";
+import type { AccountId } from "~/models/Account";
 import { getCurrencyName } from "~/models/CurrencyCode";
 import APP_ROUTES from "~/utils/appRoutes";
 import { plural } from "~/utils/stringUtils";
@@ -15,12 +14,12 @@ interface IListAccountsProps {
   selectedAccountId?: AccountId;
 }
 
-const ListAccounts: VFC<IListAccountsProps> = ({
+const ListAccounts = ({
   activeAccounts,
   inactiveAccounts,
   onSelect,
   selectedAccountId,
-}) => {
+}: IListAccountsProps) => {
   return (
     <>
       {activeAccounts.length < 1 && (

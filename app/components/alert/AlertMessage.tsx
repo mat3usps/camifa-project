@@ -1,17 +1,18 @@
 import classNames from "classnames";
-import type { FC } from "react";
+import type { ReactNode } from "react";
 import Icon from "../icon/Icon";
 
 interface IAlertMessageProps {
+  children: ReactNode;
   className?: string;
   type?: "error" | "info" | "success" | "warning";
 }
 
-const AlertMessage: FC<IAlertMessageProps> = ({
+const AlertMessage = ({
   className,
   children,
   type = "info",
-}) => {
+}: IAlertMessageProps) => {
   if (!children) {
     return null;
   }
