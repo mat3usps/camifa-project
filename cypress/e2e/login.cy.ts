@@ -6,7 +6,7 @@ const USER_PASSWORD = createTestPassword();
 
 const REGISTER_ACCOUNT = /registre sua conta/i;
 
-describe("Login & registration tests", () => {
+describe.skip("Login & registration tests", () => {
   afterEach(() => {
     cy.cleanupUser();
   });
