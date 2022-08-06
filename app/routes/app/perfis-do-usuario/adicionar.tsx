@@ -8,7 +8,7 @@ import LinkButton from "~/components/button/LinkButton";
 import Input from "~/components/form/Input";
 import Modal from "~/components/modal/Modal";
 import AccountServer from "~/server/account.server";
-import { requireUserId, setAccountSession } from "~/server/session.server";
+import { requireUserId } from "~/server/session.server";
 import APP_ROUTES from "~/utils/appRoutes";
 
 interface ActionData {
@@ -36,7 +36,7 @@ export const action: ActionFunction = async ({ request }) => {
     userId,
   });
 
-  return setAccountSession({ accountId: account.id, request });
+  return AccountServer.setAccountSession({ accountId: account.id, request });
 };
 
 export default function AddAccountPage() {

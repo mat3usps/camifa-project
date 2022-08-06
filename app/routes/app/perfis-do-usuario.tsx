@@ -8,7 +8,7 @@ import { useOptionalAccount } from "~/hooks/useOptionalAccount";
 import type Account from "~/models/Account";
 import type { AccountId } from "~/models/Account";
 import AccountServer from "~/server/account.server";
-import { requireUserId, setAccountSession } from "~/server/session.server";
+import { requireUserId } from "~/server/session.server";
 import APP_ROUTES from "~/utils/appRoutes";
 
 type LoaderData = {
@@ -20,7 +20,7 @@ export const action: ActionFunction = async ({ request }) => {
   const accountId = formData.get("accountId");
 
   if (typeof accountId === "string") {
-    return setAccountSession({ accountId, request });
+    return AccountServer.setAccountSession({ accountId, request });
   }
 
   return json({});
