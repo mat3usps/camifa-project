@@ -1,6 +1,5 @@
 import type { LinkProps } from "@remix-run/react";
 import { Link } from "@remix-run/react";
-import type { FC } from "react";
 import type { IUseButtonBase } from "./useButtonBase";
 import useButtonBase from "./useButtonBase";
 
@@ -8,7 +7,7 @@ interface ILinkButtonProps
   extends IUseButtonBase,
     Omit<LinkProps, "className"> {}
 
-const LinkButton: FC<ILinkButtonProps> = ({
+const LinkButton = ({
   children,
   type = "button",
   isOutlined,
@@ -17,7 +16,7 @@ const LinkButton: FC<ILinkButtonProps> = ({
   size,
   variant,
   ...rest
-}) => {
+}: ILinkButtonProps) => {
   const { className } = useButtonBase({
     isOutlined,
     isFullWidth,

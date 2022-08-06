@@ -1,11 +1,10 @@
 import { Form, Link } from "@remix-run/react";
-import type { VFC } from "react";
 import { useUser } from "~/hooks/useUser";
 import APP_ROUTES from "~/utils/appRoutes";
 import UserThumbnail from "../userThumbnail/UserThumbnail";
 import AppMenu from "./AppMenu";
 
-const Navbar: VFC = () => {
+const Navbar = () => {
   const user = useUser();
 
   return (

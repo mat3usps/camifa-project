@@ -1,11 +1,9 @@
-import type { VFC } from "react";
-
 interface IUserThumbnailProps {
   name?: string;
   email: string;
 }
 
-const UserThumbnail: VFC<IUserThumbnailProps> = ({ name, email }) => {
+const UserThumbnail = ({ name, email }: IUserThumbnailProps) => {
   return (
     <div tabIndex={0} className="avatar btn btn-ghost btn-circle bg-base-100">
       <div className="w-10 rounded-full">

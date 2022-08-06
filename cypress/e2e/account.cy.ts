@@ -10,7 +10,7 @@ describe("User accounts tests", () => {
   beforeEach(() => {
     cy.login();
 
-    cy.visit("/app/perfis-do-usuario");
+    cy.visitAndCheck(APP_ROUTES.accounts);
 
     cy.findAllByRole("link", { name: /adicionar primeiro perfil/i }).click();
     getNameTextbox().type("Conta 1");
@@ -51,7 +51,7 @@ describe("User accounts tests", () => {
 });
 
 function visitAccountsPage() {
-  cy.visit(APP_ROUTES.accounts);
+  cy.visitAndCheck(APP_ROUTES.accounts);
 }
 
 function clickOnAddAccountLink() {

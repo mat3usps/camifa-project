@@ -1,4 +1,4 @@
-import type { LoaderFunction} from "@remix-run/node";
+import type { LoaderArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { Outlet } from "@remix-run/react";
 import Navbar from "~/components/navbar/Navbar";
@@ -7,7 +7,7 @@ import AccountServer from "~/server/account.server";
 import { requireUserId } from "~/server/session.server";
 import APP_ROUTES from "~/utils/appRoutes";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export async function loader({ request }: LoaderArgs) {
   const userId = await requireUserId(request);
 
   const pathname = new URL(request.url).pathname;
@@ -22,7 +22,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const accounts = await AccountServer.getAll(userId);
   return { accounts };
-};
+}
 
 export default function AppPage() {
   const selectedAccount = useOptionalAccount();

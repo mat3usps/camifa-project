@@ -1,4 +1,4 @@
-import type { ActionFunction, LoaderFunction } from "@remix-run/node";
+import type { ActionArgs, LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Outlet, useFetcher, useLoaderData } from "@remix-run/react";
 import AlertMessage from "~/components/alert/AlertMessage";
@@ -15,7 +15,7 @@ type LoaderData = {
   accounts: Account[];
 };
 
-export const action: ActionFunction = async ({ request }) => {
+export async function action({ request }: ActionArgs) {
   const formData = await request.formData();
   const accountId = formData.get("accountId");
 
@@ -24,13 +24,13 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   return json({});
-};
+}
 
-export const loader: LoaderFunction = async ({ request }) => {
+export async function loader({ request }: LoaderArgs) {
   const userId = await requireUserId(request);
   const accounts = await AccountServer.getAll(userId);
   return { accounts };
-};
+}
 
 export default function AccountPage() {
   const { accounts } = useLoaderData<LoaderData>();

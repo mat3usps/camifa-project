@@ -1,6 +1,5 @@
 import { Link } from "@remix-run/react";
 import classnames from "classnames";
-import type { VFC } from "react";
 import type { Menu } from "~/utils/appMenus";
 import APP_MENUS from "~/utils/appMenus";
 
@@ -8,7 +7,7 @@ interface IAppMenuProps {
   type: "horizontal" | "vertical";
 }
 
-const AppMenu: VFC<IAppMenuProps> = ({ type }) => {
+const AppMenu = ({ type }: IAppMenuProps) => {
   const isVertical = type === "vertical";
   const isHorizontal = type === "horizontal";
 
