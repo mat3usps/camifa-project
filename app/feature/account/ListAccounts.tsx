@@ -65,18 +65,18 @@ const ListAccounts = ({
   }) {
     return (
       <Card
-        aria-label={`Selecionar conta ${name}`}
+        aria-label={isSelected ? undefined : `Selecionar conta ${name}`}
         className={classNames({
           "line-through": isDisabled,
           "bg-primary-content text-primary-focus": isSelected,
         })}
         key={id}
         onClick={
-          isDisabled || activeAccounts.length < 2
+          isSelected || isDisabled || activeAccounts.length < 2
             ? undefined
             : onSelectAccount(id)
         }
-        title={isSelected ? `${name} (ativa no momento)` : name}
+        title={isSelected ? `${name} (selecionada no momento)` : name}
       >
         <small>
           {getCurrencyName(currencyCode)} ({currencyCode})
