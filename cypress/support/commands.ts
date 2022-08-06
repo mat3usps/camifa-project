@@ -84,7 +84,7 @@ function cleanupUser({ email }: { email?: string } = {}) {
 }
 
 function registerAccount() {
-  cy.visit("/app/perfis-do-usuario");
+  cy.visitAndCheck("/app/perfis-do-usuario");
 
   cy.contains(/adicionar novo perfil/i).click();
 

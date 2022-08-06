@@ -41,12 +41,12 @@ describe("User accounts tests", () => {
     headingShouldBeVisible(/^conta 1$/i);
     headingShouldBeVisible(/^conta 2 \(ativa no momento\)$/i);
 
-    // // Select the first account
-    // cy.findByRole("button", { name: /selecionar conta conta 1/i }).click();
+    // Select the first account
+    cy.findByRole("button", { name: /selecionar conta conta 1/i }).click();
 
-    // visitAccountsPage();
-    // headingShouldBeVisible(FIRST_ACCOUNT_SELECTED);
-    // headingShouldBeVisible(/^conta 2$/i);
+    visitAccountsPage();
+    headingShouldBeVisible(FIRST_ACCOUNT_SELECTED);
+    headingShouldBeVisible(/^conta 2$/i);
   });
 });
 
