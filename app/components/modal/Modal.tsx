@@ -1,21 +1,22 @@
 import { Link } from "@remix-run/react";
-import type { FC, ReactNode } from "react";
+import type { ReactNode } from "react";
 import type { LinkTo } from "~/types/LinkTo";
 
 interface IModalProps {
+  children: ReactNode;
   buttons?: ReactNode;
   isOpen: boolean;
   onCloseLinkTo?: LinkTo;
   title?: string;
 }
 
-const Modal: FC<IModalProps> = ({
+const Modal = ({
   buttons,
   children,
   isOpen,
   onCloseLinkTo,
   title,
-}) => {
+}: IModalProps) => {
   if (!isOpen) {
     return null;
   }
@@ -30,7 +31,7 @@ const Modal: FC<IModalProps> = ({
         {onCloseLinkTo && (
           <Link
             aria-label="Fechar"
-            className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2"
+            className="btn btn-ghost btn-circle btn-sm absolute right-2 top-2"
             to={onCloseLinkTo}
           >
             ✕

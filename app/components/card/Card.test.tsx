@@ -77,10 +77,13 @@ describe("<Card />", () => {
 });
 
 // Helpers
-function getRenderer(props: ComponentProps<typeof Card> = {}) {
+function getRenderer({
+  children = "Card children",
+  ...rest
+}: Partial<ComponentProps<typeof Card>> = {}) {
   return render(
     <MemoryRouter>
-      <Card {...props} />
+      <Card {...rest}>{children}</Card>
     </MemoryRouter>
   );
 }

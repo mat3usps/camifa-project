@@ -57,10 +57,16 @@ describe("<Modal />", () => {
 });
 
 // Helpers
-function getRenderer(props: ComponentProps<typeof Modal>) {
+function getRenderer({
+  children = "Modal children",
+  isOpen = true,
+  ...rest
+}: Partial<ComponentProps<typeof Modal>>) {
   return render(
     <MemoryRouter>
-      <Modal {...props} />
+      <Modal isOpen={isOpen} {...rest}>
+        {children}
+      </Modal>
     </MemoryRouter>
   );
 }

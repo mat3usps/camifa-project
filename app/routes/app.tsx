@@ -1,11 +1,11 @@
-import type { LoaderFunction } from "@remix-run/node";
+import type { LoaderArgs } from "@remix-run/node";
 import { Outlet } from "@remix-run/react";
 import Navbar from "~/components/navbar/Navbar";
 import { redirectToLoginIfNotLoggedIn } from "~/middleware/redirects";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export async function loader({ request }: LoaderArgs) {
   return redirectToLoginIfNotLoggedIn(request);
-};
+}
 
 export default function AppPage() {
   return (

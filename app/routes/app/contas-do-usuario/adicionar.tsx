@@ -1,4 +1,4 @@
-import type { ActionFunction} from "@remix-run/node";
+import type { ActionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 
 import { Form, useActionData } from "@remix-run/react";
@@ -12,23 +12,14 @@ import AccountServer from "~/server/account.server";
 import { setAccountSession } from "~/server/session.server";
 import APP_ROUTES from "~/utils/appRoutes";
 
-interface ActionData {
-  errors?: {
-    name?: string;
-  };
-}
-
-export const action: ActionFunction = async ({ request }) => {
+export async function action({ request }: ActionArgs) {
   const userId = await getUserIdOrRedirect(request);
 
   const formData = await request.formData();
   const name = formData.get("name");
 
   if (!name || typeof name !== "string") {
-    return json<ActionData>(
-      { errors: { name: "Nome é inválido" } },
-      { status: 400 }
-    );
+    return json({ errors: { name: "Nome é inválido" } }, { status: 400 });
   }
 
   const account = await AccountServer.create({
@@ -38,12 +29,12 @@ export const action: ActionFunction = async ({ request }) => {
   });
 
   return setAccountSession({ accountId: account.id, request });
-};
+}
 
 export default function AddAccountPage() {
   const nameRef = useRef<HTMLInputElement>(null);
 
-  const actionData = useActionData<ActionData>();
+  const actionData = useActionData<typeof action>();
 
   return (
     <Form method="post">

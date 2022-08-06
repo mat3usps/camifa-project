@@ -9,7 +9,7 @@ describe("User accounts tests", () => {
 
   beforeEach(() => {
     cy.login();
-    cy.visit("/app");
+    cy.visitAndCheck(APP_ROUTES.app);
   });
 
   it("should allow to register new accounts and change the selected one", () => {
