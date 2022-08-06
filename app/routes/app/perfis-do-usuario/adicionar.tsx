@@ -11,12 +11,6 @@ import AccountServer from "~/server/account.server";
 import { requireUserId } from "~/server/session.server";
 import APP_ROUTES from "~/utils/appRoutes";
 
-interface ActionData {
-  errors?: {
-    name?: string;
-  };
-}
-
 export async function action({ request }: ActionArgs) {
   const userId = await requireUserId(request);
 
