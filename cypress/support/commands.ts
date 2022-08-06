@@ -28,6 +28,16 @@ declare global {
       cleanupUser: typeof cleanupUser;
 
       /**
+       * Register one account to the user
+       *
+       * @returns {typeof registerAccount}
+       * @memberof Chainable
+       * @example
+       *    cy.registerAccount()
+       */
+      registerAccount: typeof registerAccount;
+
+      /**
        * Extends the standard visit command to wait for the page to load
        *
        * @returns {typeof visitAndCheck}
@@ -73,6 +83,15 @@ function cleanupUser({ email }: { email?: string } = {}) {
   cy.clearCookie("__session");
 }
 
+function registerAccount() {
+  cy.visitAndCheck("/app/perfis-do-usuario");
+
+  cy.contains(/adicionar novo perfil/i).click();
+
+  cy.get("#name").type("Account #1");
+  cy.contains(/salvar/i).click();
+}
+
 // We're waiting a second because of this issue happen randomly
 // https://github.com/cypress-io/cypress/issues/7306
 // Also added custom types to avoid getting detached
@@ -92,6 +111,7 @@ function deleteUserByEmail(email: string) {
 
 Cypress.Commands.add("login", login);
 Cypress.Commands.add("cleanupUser", cleanupUser);
+Cypress.Commands.add("registerAccount", registerAccount);
 Cypress.Commands.add("visitAndCheck", visitAndCheck);
 
 /*

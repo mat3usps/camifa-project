@@ -7,13 +7,12 @@ import Button from "~/components/button/Button";
 import LinkButton from "~/components/button/LinkButton";
 import Input from "~/components/form/Input";
 import Modal from "~/components/modal/Modal";
-import { getUserIdOrRedirect } from "~/middleware/getUserIdOrRedirect";
 import AccountServer from "~/server/account.server";
-import { setAccountSession } from "~/server/session.server";
+import { requireUserId } from "~/server/session.server";
 import APP_ROUTES from "~/utils/appRoutes";
 
 export async function action({ request }: ActionArgs) {
-  const userId = await getUserIdOrRedirect(request);
+  const userId = await requireUserId(request);
 
   const formData = await request.formData();
   const name = formData.get("name");
@@ -28,7 +27,7 @@ export async function action({ request }: ActionArgs) {
     userId,
   });
 
-  return setAccountSession({ accountId: account.id, request });
+  return AccountServer.setAccountSession({ accountId: account.id, request });
 }
 
 export default function AddAccountPage() {
@@ -49,7 +48,7 @@ export default function AddAccountPage() {
         }
         isOpen={true}
         onCloseLinkTo={APP_ROUTES.accounts}
-        title="Nova conta"
+        title="Novo perfil"
       >
         <div className="space-y-6">
           <Input
@@ -57,7 +56,9 @@ export default function AddAccountPage() {
             id="name"
             isRequired
             errorMessage={actionData?.errors?.name}
-            label="Nome"
+            placeholder="Pessoal, Empresa XYZ, Conta de Investimento, etc"
+            helperMessage="Qual perfil financeiro que você quer gerenciar?"
+            label="Nome do perfil"
             ref={nameRef}
           />
         </div>

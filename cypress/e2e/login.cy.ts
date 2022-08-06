@@ -6,7 +6,7 @@ const USER_PASSWORD = createTestPassword();
 
 const REGISTER_ACCOUNT = /registre sua conta/i;
 
-describe("Login & registration tests", () => {
+describe.skip("Login & registration tests", () => {
   afterEach(() => {
     cy.cleanupUser();
   });
@@ -22,7 +22,9 @@ describe("Login & registration tests", () => {
     getEmailTextbox().type(USER_EMAIL);
     getPasswordTextbox().type(USER_PASSWORD);
     cy.findByRole("button", { name: REGISTER_ACCOUNT }).click();
-    cy.url().should("include", APP_ROUTES.app);
+    cy.url().should("include", APP_ROUTES.accounts);
+
+    cy.registerAccount();
 
     // Logout
     cy.findByLabelText(/menu do perfil do usuário/i).click();

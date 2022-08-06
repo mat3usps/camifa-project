@@ -1,21 +1,29 @@
 import APP_ROUTES from "~/utils/appRoutes";
 
-const FIRST_ACCOUNT_SELECTED = /^conta 1 \(ativa no momento\)$/i;
+const FIRST_ACCOUNT_SELECTED = /^conta 1 \(selecionada no momento\)$/i;
 
-describe("User accounts tests", () => {
+describe.skip("User accounts tests", () => {
   afterEach(() => {
     cy.cleanupUser();
   });
 
   beforeEach(() => {
     cy.login();
-    cy.visitAndCheck(APP_ROUTES.app);
+
+    cy.visitAndCheck(APP_ROUTES.accounts);
+
+    cy.findAllByRole("link", { name: /adicionar primeiro perfil/i }).click();
+    getNameTextbox().type("Conta 1");
+    clickOnSaveLink();
+    cy.url().should("include", APP_ROUTES.app);
   });
 
   it("should allow to register new accounts and change the selected one", () => {
     cy.findByLabelText(/menu do perfil do usuário/i).click();
     cy.findByRole("link", { name: /suas contas/i }).click();
     cy.url().should("include", APP_ROUTES.accounts);
+
+    headingShouldExist(FIRST_ACCOUNT_SELECTED);
 
     // Go to add account page
     clickOnAddAccountLink();
@@ -25,30 +33,32 @@ describe("User accounts tests", () => {
     cy.findByRole("link", { name: /cancelar/i }).click();
     cy.url().should("include", APP_ROUTES.accounts);
 
-    // Add new account
-    clickOnAddAccountLink();
-    getNameTextbox().type("Conta 1");
-    clickOnSaveLink();
-    cy.url().should("include", APP_ROUTES.accounts);
-    headingShouldBeVisible(FIRST_ACCOUNT_SELECTED);
-
     // Add second account and select it
     clickOnAddAccountLink();
     getNameTextbox().type("Conta 2");
     clickOnSaveLink();
-    cy.url().should("include", APP_ROUTES.accounts);
-    headingShouldBeVisible(/^conta 1$/i);
-    headingShouldBeVisible(/^conta 2 \(ativa no momento\)$/i);
+    cy.url().should("include", APP_ROUTES.app);
+
+    visitAccountsPage();
+    headingShouldExist(/^conta 1$/i);
+    headingShouldExist(/^conta 2 \(selecionada no momento\)$/i);
 
     // Select the first account
     cy.findByRole("button", { name: /selecionar conta conta 1/i }).click();
-    headingShouldBeVisible(FIRST_ACCOUNT_SELECTED);
-    headingShouldBeVisible(/^conta 2$/i);
+    cy.url().should("include", APP_ROUTES.app);
+
+    visitAccountsPage();
+    headingShouldExist(FIRST_ACCOUNT_SELECTED);
+    headingShouldExist(/^conta 2$/i);
   });
 });
 
+function visitAccountsPage() {
+  cy.visitAndCheck(APP_ROUTES.accounts);
+}
+
 function clickOnAddAccountLink() {
-  cy.findByRole("link", { name: /adicionar nova conta/i }).click();
+  cy.findAllByRole("link", { name: /adicionar novo perfil/i }).click();
 }
 
 function getNameTextbox() {
@@ -59,6 +69,6 @@ function clickOnSaveLink() {
   cy.findByRole("button", { name: /salvar/i }).click();
 }
 
-function headingShouldBeVisible(regex: RegExp) {
-  cy.findByRole("heading", { name: regex }).should("be.visible");
+function headingShouldExist(regex: RegExp) {
+  cy.findByRole("heading", { name: regex }).should("exist");
 }
