@@ -1,6 +1,6 @@
 import classNames from "classnames";
-import LinkButton from "~/components/button/LinkButton";
 import Card from "~/components/card/Card";
+import ListAsGridContainer from "~/components/ListAsGrid/ListAsGridContainer";
 import type Account from "~/models/Account";
 import type { AccountId } from "~/models/Account";
 import { getCurrencyName } from "~/models/CurrencyCode";
@@ -21,48 +21,27 @@ const ListAccounts = ({
   selectedAccountId,
 }: IListAccountsProps) => {
   return (
-    <>
-      {activeAccounts.length < 1 && (
-        <>
-          <p className="font-bold">
-            Cadastre sua primeira conta para utilizar o app
-          </p>
-          <LinkButton to={APP_ROUTES.addAccount} size="lg">
-            Adicionar primeiro perfil
-          </LinkButton>
-        </>
-      )}
-      {activeAccounts.map((account) => {
-        const isSelected = account.id === selectedAccountId;
-        return renderAccount({ account, isSelected });
+    <ListAsGridContainer<Account>
+      activeList={activeAccounts}
+      inactiveList={inactiveAccounts}
+      inactiveTitle={plural({
+        countFrom: inactiveAccounts,
+        one: "Perfil inativo",
+        other: "Perfis inativos",
       })}
-      {inactiveAccounts.length > 0 && (
-        <>
-          <div className="divider mt-12" />
-          <h2>
-            {plural({
-              countFrom: inactiveAccounts,
-              one: "Perfil inativo",
-              other: "Perfis inativos",
-            })}
-          </h2>
-          {inactiveAccounts.map((account) =>
-            renderAccount({ account, isDisabled: true })
-          )}
-        </>
-      )}
-    </>
+      registerFirstItem={{
+        buttonLabel: "Adicionar primeiro perfil",
+        title: "Cadastre sua primeira conta para utilizar o app",
+        to: APP_ROUTES.addAccount,
+      }}
+      renderItem={renderAccount}
+    />
   );
 
-  function renderAccount({
-    account: { currencyCode, id, name },
-    isDisabled,
-    isSelected,
-  }: {
-    account: Account;
-    isDisabled?: boolean;
-    isSelected?: boolean;
-  }) {
+  function renderAccount({ currencyCode, id, isActive, name }: Account) {
+    const isDisabled = !isActive;
+    const isSelected = !isDisabled && id === selectedAccountId;
+
     return (
       <Card
         aria-label={isSelected ? undefined : `Selecionar conta ${name}`}

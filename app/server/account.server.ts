@@ -47,6 +47,14 @@ class AccountServer {
     return AccountServer.update({ id, isDeleted: true });
   };
 
+  static requireAccountId = async (request: Request) => {
+    const userId = await AccountServer.getAccountId(request);
+    if (!userId) {
+      throw redirect(APP_ROUTES.accounts);
+    }
+    return userId;
+  };
+
   static getSelectedAccount = async (
     request: Request,
     userId: UserId | undefined

@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 interface ICardProps {
   "aria-label"?: string;
@@ -8,6 +8,7 @@ interface ICardProps {
   className?: string;
   "data-testid"?: string;
   onClick?: () => void;
+  style?: CSSProperties;
   title?: string;
 }
 
@@ -18,6 +19,7 @@ const Card = ({
   className,
   "data-testid": testId = "Card",
   onClick,
+  style,
   title,
 }: ICardProps) => {
   return (
@@ -30,6 +32,7 @@ const Card = ({
       data-testid={testId}
       onClick={onClick}
       role={onClick ? "button" : undefined}
+      style={style}
     >
       <div className="card-body">
         {title && <h2 className="card-title">{title}</h2>}
