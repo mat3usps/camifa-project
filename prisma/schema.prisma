@@ -45,7 +45,7 @@ model BankAccount {
   bankName String?
   color String?
   description String?
-  initialBalance BigInt @default(0)
+  initialBalance Int @default(0)
   type String @default("checking")
   isActive Boolean @default(true)
   isDeleted Boolean @default(false)
