@@ -1,4 +1,5 @@
 import type { LinkTo } from "~/types/LinkTo";
+import APP_ROUTES from "./appRoutes";
 
 export type Menu = {
   label: string;
@@ -8,26 +9,8 @@ export type Menu = {
 
 const APP_MENUS: Menu[] = [
   {
-    label: "Single link",
-    to: {
-      pathname: "/app",
-      search: "?foo=bar",
-    },
-  },
-  {
-    label: "Single item without to",
-  },
-  {
-    label: "Item with sub-menus",
-    subMenus: [
-      {
-        label: "Submenu 1",
-        to: "/submenu1",
-      },
-      {
-        label: "Submenu 2",
-      },
-    ],
+    label: "Contas bancárias",
+    to: APP_ROUTES.bankAccounts,
   },
 ];
 

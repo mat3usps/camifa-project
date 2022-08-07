@@ -8,42 +8,11 @@ exports[`<AppMenu /> > should match snapshot for horizontal menu 1`] = `
   >
     <li>
       <a
-        href="/app?foo=bar"
+        href="/app/contas-bancarias"
         tabindex="0"
       >
-        Single link
+        Contas bancárias
       </a>
-    </li>
-    <li
-      tabindex="0"
-    >
-      <span
-        class="justify-between"
-      >
-        Item with sub-menus
-        <svg
-          class="fill-current"
-          height="20"
-          viewBox="0 0 24 24"
-          width="20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"
-          />
-        </svg>
-      </span>
-      <ul
-        class="bg-base-100 p-2 shadow"
-      >
-        <li>
-          <a
-            href="/submenu1"
-          >
-            Submenu 1
-          </a>
-        </li>
-      </ul>
     </li>
   </ul>
 </div>
@@ -57,42 +26,11 @@ exports[`<AppMenu /> > should match snapshot for vertical menu 1`] = `
   >
     <li>
       <a
-        href="/app?foo=bar"
+        href="/app/contas-bancarias"
         tabindex="0"
       >
-        Single link
+        Contas bancárias
       </a>
-    </li>
-    <li
-      tabindex="0"
-    >
-      <span
-        class="justify-between"
-      >
-        Item with sub-menus
-        <svg
-          class="fill-current"
-          height="24"
-          viewBox="0 0 24 24"
-          width="24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"
-          />
-        </svg>
-      </span>
-      <ul
-        class="bg-base-100 p-2 shadow"
-      >
-        <li>
-          <a
-            href="/submenu1"
-          >
-            Submenu 1
-          </a>
-        </li>
-      </ul>
     </li>
   </ul>
 </div>

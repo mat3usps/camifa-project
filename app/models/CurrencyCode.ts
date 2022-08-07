@@ -1,9 +1,5 @@
 export const CURRENCY_LIST = {
-  ARS: "Peso Argentino",
   BRL: "Real Brasileiro",
-  CAD: "Dólar Canadense",
-  CLP: "Peso Chileno",
-  COP: "Peso Colombiano",
   EUR: "Euro",
   USD: "Dólar Americano",
 };
