@@ -1,0 +1,14 @@
+// Vitest Snapshot v1
+
+exports[`<ListAsGrid /> > should match snapshot 1`] = `
+<div>
+  <div
+    class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6"
+    data-testid="ListAsGrid"
+  >
+    <p>
+      A children
+    </p>
+  </div>
+</div>
+`;

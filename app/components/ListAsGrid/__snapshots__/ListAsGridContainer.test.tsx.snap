@@ -1,0 +1,21 @@
+// Vitest Snapshot v1
+
+exports[`<ListAsGridContainer /> > should match snapshot 1`] = `
+<div>
+  <p
+    class="font-bold"
+  >
+    Register item
+  </p>
+  <a
+    class="btn btn-primary btn-lg"
+    href="/register"
+  >
+    Register
+  </a>
+  <div
+    class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6"
+    data-testid="ListAsGrid"
+  />
+</div>
+`;
