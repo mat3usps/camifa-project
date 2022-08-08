@@ -1,5 +1,5 @@
 import currency from "currency.js";
-import { CurrencyCode } from "~/models/CurrencyCode";
+import type { CurrencyCode } from "~/models/CurrencyCode";
 
 export function displayCurrency(value: number, currencyCode: CurrencyCode) {
   return formatCurrency(value, currencyCode).format();

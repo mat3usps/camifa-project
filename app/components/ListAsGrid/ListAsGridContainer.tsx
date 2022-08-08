@@ -1,8 +1,8 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import LinkButton from "~/components/button/LinkButton";
 import InactiveItemsList from "~/components/InactiveItemsList/InactiveItemsList";
 import ListAsGrid from "~/components/ListAsGrid/ListAsGrid";
-import { LinkTo } from "~/types/LinkTo";
+import type { LinkTo } from "~/types/LinkTo";
 
 export interface IListAsGridContainerProps<T> {
   activeList: T[];

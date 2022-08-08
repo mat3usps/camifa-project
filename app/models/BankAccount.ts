@@ -1,4 +1,6 @@
-import type { BankAccount } from "@prisma/client";
+import type { BankAccount as BankAccountFromPrisma } from "@prisma/client";
+
+export type BankAccount = BankAccountFromPrisma;
 
 export type BankAccountId = BankAccount["id"];
 
@@ -11,5 +13,3 @@ export type EditBankAccount = Omit<
   Partial<BankAccount>,
   "createdAt" | "deletedAt" | "updatedAt"
 >;
-
-export default BankAccount;

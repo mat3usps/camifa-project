@@ -1,11 +1,16 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
-import ListAsGridContainer, {
-  IListAsGridContainerProps,
-} from "./ListAsGridContainer";
+import type { IListAsGridContainerProps } from "./ListAsGridContainer";
+import ListAsGridContainer from "./ListAsGridContainer";
 
-const { getAllByTestId, getByRole, getByText, queryByRole, queryByText } =
-  screen;
+const {
+  getAllByTestId,
+  getByRole,
+  getByTestId,
+  getByText,
+  queryByRole,
+  queryByText,
+} = screen;
 
 describe("<ListAsGridContainer />", () => {
   it("should match snapshot", () => {
@@ -47,7 +52,7 @@ describe("<ListAsGridContainer />", () => {
       activeList: [{ id: "1", name: "Item 1" }],
       inactiveList: [],
     });
-    expect(getAllByTestId("ListAsGrid")).toHaveLength(1);
+    expect(getByTestId("ListAsGrid")).toBeInTheDocument();
   });
 
   it("should render ListAsGrid component for both active and inactive lists", () => {
