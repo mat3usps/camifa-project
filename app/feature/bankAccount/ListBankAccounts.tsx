@@ -3,7 +3,7 @@ import Card from "~/components/card/Card";
 import ListAsGridContainer from "~/components/ListAsGrid/ListAsGridContainer";
 import { useAccount } from "~/hooks/useAccount";
 import type { AccountId } from "~/models/Account";
-import BankAccount from "~/models/BankAccount";
+import type { BankAccount } from "~/models/BankAccount";
 import APP_ROUTES from "~/utils/appRoutes";
 import { displayCurrency } from "~/utils/currencyUtils";
 import { plural } from "~/utils/stringUtils";

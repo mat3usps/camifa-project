@@ -1,8 +1,7 @@
 import classNames from "classnames";
 import Card from "~/components/card/Card";
 import ListAsGridContainer from "~/components/ListAsGrid/ListAsGridContainer";
-import type Account from "~/models/Account";
-import type { AccountId } from "~/models/Account";
+import type { Account, AccountId } from "~/models/Account";
 import { getCurrencyName } from "~/models/CurrencyCode";
 import APP_ROUTES from "~/utils/appRoutes";
 import { plural } from "~/utils/stringUtils";

@@ -3,7 +3,7 @@ import { Outlet, useLoaderData } from "@remix-run/react";
 import LinkButton from "~/components/button/LinkButton";
 import ListBankAccounts from "~/feature/bankAccount/ListBankAccounts";
 import type { AccountId } from "~/models/Account";
-import BankAccount from "~/models/BankAccount";
+import type { BankAccount } from "~/models/BankAccount";
 import AccountServer from "~/server/account.server";
 import BankAccountServer from "~/server/bankAccount.server";
 import APP_ROUTES from "~/utils/appRoutes";

@@ -1,6 +1,6 @@
 import type { AddBankAccount, EditBankAccount } from "~/models/BankAccount";
 
-import { AccountId } from "~/models/Account";
+import type { AccountId } from "~/models/Account";
 import { prisma } from "~/server/db.server";
 
 class BankAccountServer {

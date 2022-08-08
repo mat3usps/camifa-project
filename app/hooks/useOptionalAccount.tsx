@@ -1,4 +1,4 @@
-import type Account from "~/models/Account";
+import type { Account } from "~/models/Account";
 import { useMatchesData } from "./useMatchesData";
 
 export function useOptionalAccount(): Account | undefined {

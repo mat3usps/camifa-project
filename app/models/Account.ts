@@ -1,7 +1,7 @@
 import type { Account as AccountFromPrisma } from "@prisma/client";
 import type { CurrencyCode } from "./CurrencyCode";
 
-type Account = Omit<AccountFromPrisma, "currencyCode"> & {
+export type Account = Omit<AccountFromPrisma, "currencyCode"> & {
   currencyCode: CurrencyCode;
 };
 
@@ -16,5 +16,3 @@ export type EditAccount = Omit<
   Partial<Account>,
   "createdAt" | "deletedAt" | "updatedAt"
 >;
-
-export default Account;
